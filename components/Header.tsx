@@ -14,33 +14,28 @@ export const Header = () => {
       </div>
       <div className="z-10 bg-black fixed top-12 sm:top-0 px-4 py-w border-2 border-solid border-white flex flex-row w-fit space-x-4">
         <Link
-          href="/"
-        >
-          <a className="hover:text-[#f53bc3]">
-          HOME
-          </a>
-        </Link>
-        <Link
-          href="/indexer"
-        >
-          <a className="hover:text-[#f53bc3]">
-            API
-          </a>
-        </Link>
-        <Link
           href="/create"
         >
           <a className="hover:text-[#f53bc3]">
             CREATE
           </a>
-        </Link>
+        </Link>     
         <Link
-          href="/protocol"
+          href="/"
         >
           <a className="hover:text-[#f53bc3]">
-            PROTOCOL
+            COLLECT
           </a>
         </Link>
+        <Link
+          href="/about"
+        >
+          <a className="hover:text-[#f53bc3]">
+            ABOUT
+          </a>
+        </Link>
+
+
       </div>
     </div>
   )
