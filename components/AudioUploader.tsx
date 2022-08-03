@@ -17,6 +17,7 @@ const AudioUploader = ({ audio, setAudio }) => {
   const handleAudio = (file: File) => {
     //you can carry out any file validations here...
     setAudio(file);
+    console.log("audio file", file)
   };
   return (
     <div className="">

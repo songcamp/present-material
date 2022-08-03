@@ -12,18 +12,24 @@ export default function SongForm({
     minting,
     songForm,
     setSongForm,
-    setMinting
+    setMinting,
+    editionInputs,
+    setEditionInputs,
+    // setMetadataStatus
 }) {
 
     // TRACK STATE
     const [image, setImage] = useState(null);
     const [previewUrl, setPreviewUrl] = useState("");
     const [audio, setAudio] = useState(null);
-    console.log("audio", audio);
+
 
     const [audioCID, setAudioCID] = useState("")
     const [imageCID, setImageCID] = useState("")
     const [descriptionCID, setDescriptionCID] = useState("")
+    const [ipfsLoading, setIpfsLoading] = useState(false)
+    const [uploadSuccess, setUploadSuccess] = useState("No Files Uploaded")
+    const [uploadAttempted, setUploadAttempted] = useState(false)
 
     const [track, setTrack] = useState({
         title: "",
@@ -34,11 +40,7 @@ export default function SongForm({
         animation_uri: "",
     });    
 
-
-
-    console.log(track);    
-
-    function closeModal() {
+    const closeModal = () => {
         setSongForm(false);
     }
 
@@ -56,7 +58,13 @@ export default function SongForm({
                 animation_uri: `ipfs://${cid}`
             }
         })
-        console.log("track: ", track)
+        setEditionInputs(current => {
+            return {
+                ...current,
+                metadataAnimationURI: `ipfs://${cid}`
+            }
+        })       
+        return cid
     }    
 
     // ===== IPFS Image Upload
@@ -72,14 +80,28 @@ export default function SongForm({
                 ...current,
                 image: `ipfs://${cid}`
             }
-        })        
-        console.log("track: ", track)
+        })
+        setEditionInputs(current => {
+            return {
+                ...current,
+                metadataImageURI: `ipfs://${cid}`
+            }
+        })                    
+        return cid
     }
     
     // ===== IPFS Description Upload
-    const ipfsDescriptionUpload = async () => {
+    const ipfsDescriptionUpload = async (audioo, imagee) => {
         console.log("description before upload: ", track)
-        const metadata = JSON.stringify(track)
+        // const metadata = JSON.stringify(track)
+        const metadata = JSON.stringify({
+            title: track.title,
+            artist: track.artist,
+            duration: track.duration,
+            description: track.description,
+            image: `ipfs://${imagee}`,
+            animation_uri: `ipfs://${audioo}`,
+        })
         console.log("what is the metadatta:", metadata)
         const metadataBlob = new Blob(
             [metadata],
@@ -91,35 +113,55 @@ export default function SongForm({
         )
         console.log("description cid: ", cid)
         setDescriptionCID(cid)
-        
+        setTrack(current => {
+            return {
+                ...current,
+                description: `ipfs://${cid}`
+            }
+        })
+        setEditionInputs(current => {
+            return {
+                ...current,
+                songMetadataURI: `ipfs://${cid}`
+            }
+        })    
+        return cid     
     }        
 
-    // // ===== IPFS Description Upload
-    // const ipfsDescriptionUpload = async () => {
-    //     const metadata = await client.store({
-    //         artist: track.artist,            
-    //         name: track.title,
-    //         duration: track.duration,
-    //         description: track.description,
-    //         image: new File(
-    //         [
-    //             track.imageCoverFile
-    //         ],
-    //         'coverArt.jpg',
-    //         { type: 'image/jpg' }
-    //         ),
-    //         external_link: new File(
-    //             [
-    //                 track.audioFile
-    //             ],
-    //             'pinpie.jpg',
-    //             { type: 'audio/mp4' }
-    //             ),
-    //         seller_fee_basis_points: 100
-    //     })
-    //     console.log(metadata.url)
-    //     // ipfs://bafyreib4pff766vhpbxbhjbqqnsh5emeznvujayjj4z2iu533cprgbz23m/metadata.json
-    // }            
+    // ===== Combined Upload
+    const ipfsCombinedUpload = async () => {
+        setIpfsLoading(true)
+        setUploadAttempted(true)
+        setMetadataStatus("Loading . . .")
+        const audioUpload = await ipfsAudioUpload()
+        console.log("audioUpload: ", audioUpload)
+        const imageUpload = await ipfsImageUpload()
+        console.log("imageUpload: ", imageUpload)
+        ipfsDescriptionUpload(audioUpload, imageUpload)
+
+
+        // try {
+        //     await ipfsAudioUpload()
+        // } catch (error) {
+        //     setUploadSuccess("error uploading audio")
+        //     console.error(error)
+        // } try {
+        //     await ipfsImageUpload()
+        // } catch (error) {
+        //     setUploadSuccess("error uploading image")
+        //     console.error(error)
+        // } try {           
+        //     await ipfsDescriptionUpload()
+        // } catch (error) {
+        //     setUploadSuccess("error uploading description") 
+        //     console.error(error)
+        // }
+        setIpfsLoading(false)
+        console.log("uploading loop exited")
+        setUploadSuccess("Metadata Uploaded Successfully")
+        setMetadataStatus("Metadata Uploaded Successfully")
+
+    }                        
 
 
     return (
@@ -154,11 +196,8 @@ export default function SongForm({
                         <div className="md:col-span-1">
                             <div className="px-4 sm:px-0">
                             <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                Track #{minting.length + 1}
+                                Image/Audio Preview
                             </h3>
-                            <p className="mt-1 text-sm text-gray-600">
-                                This information is specific for each track.
-                            </p>
                             </div>
                             {previewUrl && (
                             <div className="mt-4  border border-stone-500 rounded-lg overflow-hidden">
@@ -362,36 +401,37 @@ export default function SongForm({
                                     </div>
                                 </div>
                                 <div>
-                                    {JSON.stringify(track)}
-                                </div>
-                                </div>
-                                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">                                
-                                <button
-                                    type="submit"
-                                    onClick={() => ipfsImageUpload()}
-                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    IMAGE UPLOAD
-                                </button>
-                                <button
-                                    type="submit"
-                                    onClick={() => ipfsAudioUpload()}
-                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    AUDIO UPLOAD
-                                </button>
-                                <button
-                                    type="submit"
-                                    onClick={() => ipfsDescriptionUpload()}
-                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    DESCRIPTION UPLOAD
-                                </button>
-
-
-                                </div>
+                                    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">                                
+                                        <button
+                                            type="submit"
+                                            onClick={() => ipfsCombinedUpload()}
+                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        >
+                                            UPLOAD TO IPFS
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            onClick={() => closeModal()}
+                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        >
+                                            CLOSE
+                                        </button>                                    
+                                    </div>
+                                    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">                                
+                                        {"Upload Status: "} 
+                                        { !uploadAttempted ? 
+                                        "no files uploaded" : 
+                                        <>
+                                        { ipfsLoading ?
+                                        "loading . . ." : 
+                                        uploadSuccess
+                                        }
+                                        </>
+                                        }
+                                    </div>                                                                                                          
+                                </div>                                
                             </div>
-                            
+                            </div>                            
                         </div>
                         </div>
                     </Dialog.Panel>
