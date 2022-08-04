@@ -1,17 +1,18 @@
 import { NextPage } from "next"
 import { Header } from "../components/Header"
 import { useState, useEffect } from "react"
-import { usePrepareContractWrite, useContractWrite, useSwitchNetwork, useNetwork, useAccount, useConnect } from "wagmi"
+import { useContractWrite, useSwitchNetwork, useNetwork, useAccount, useConnect } from "wagmi"
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { utils } from "ethers"
 import Image from "next/image"
 import ReactAudioPlayer from 'react-audio-player'
 
 import SongForm from "../components/SongForm"
+import * as manualZoraNFTCreatorV1 from "../contractABI/manualZoraNFTCreatorV1.json"
+
 
 const ZoraNFTCreatorV1_ABI = require("../node_modules/@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json")
 
-console.log("abi:", ZoraNFTCreatorV1_ABI)
 
 const ZoraNFTCreatorProxy_ADDRESS_RINKEBY = "0x2d2acD205bd6d9D0B3E79990e093768375AD3a30"
 const ZoraNFTCreatorProxy_ADDRESS_MAINNET = "0xF74B146ce44CC162b601deC3BE331784DB111DC1"
@@ -128,8 +129,7 @@ const Create: NextPage = () => {
       return
     }
     mainnetWrite()
-  }
-
+  } 
 
   const dealWithEther = (price) => {
     if (price === "") {
@@ -143,88 +143,164 @@ const Create: NextPage = () => {
     return cid
   }
 
+// double new calls
 
-  // new calls - rinkeby
-  const { config: rinkebyConfig, error: rinkebyError } = usePrepareContractWrite({
-    addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
-    contractInterface: ZoraNFTCreatorV1_ABI.abi,
-    functionName: 'setupDropsContract',
-    args: [
-      editionInputs.contractName,
-      editionInputs.contractSymbol,
-      editionInputs.contractAdmin,
-      editionInputs.contractMaxSupply,
-      editionInputs.secondaryRoyalties,
-      editionInputs.fundsRecipient,
-      [
-        dealWithEther(editionInputs.salesConfig.priceEther),
-        editionInputs.salesConfig.perWalletMintCap,
-        editionInputs.salesConfig.publicSaleStart,
-        editionInputs.salesConfig.publicSaleEnd,
-        editionInputs.salesConfig.presaleStart,
-        editionInputs.salesConfig.presaleEnd,
-        editionInputs.salesConfig.presaleMerkleRoot
-      ],
-      FlexibleEditionMetadataRenderer_ADDRESS_RINKEBY,
-      utils.defaultAbiCoder.encode(
+    const { data: rinkebyEditionData, isError: rinkebyEditionError, isLoading: rinkebyEditionLoading, write: rinkebyWrite } = useContractWrite({
+      mode: 'recklesslyUnprepared',
+      addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
+      contractInterface: manualZoraNFTCreatorV1.abi,
+      functionName: 'setupDropsContract',
+      args: [
+        editionInputs.contractName,
+        editionInputs.contractSymbol,
+        editionInputs.contractAdmin,
+        editionInputs.contractMaxSupply,
+        editionInputs.secondaryRoyalties,
+        editionInputs.fundsRecipient,
         [
-          "string", 
-          "string", 
-          "string"
+          dealWithEther(editionInputs.salesConfig.priceEther),
+          editionInputs.salesConfig.perWalletMintCap,
+          editionInputs.salesConfig.publicSaleStart,
+          editionInputs.salesConfig.publicSaleEnd,
+          editionInputs.salesConfig.presaleStart,
+          editionInputs.salesConfig.presaleEnd,
+          editionInputs.salesConfig.presaleMerkleRoot
         ],
-        [
-          editionInputs.songMetadataURI,
-          editionInputs.metadataAnimationURI,
-          editionInputs.metadataImageURI
-        ]
-      )
-    ],
-    onError(rinkebyError) {
-      console.log("rinkeby error", rinkebyError)
-    },
-  })
+        FlexibleEditionMetadataRenderer_ADDRESS_RINKEBY,
+        utils.defaultAbiCoder.encode(
+          [
+            "string",
+            "string",
+            "string"
+          ],
+          [
+            editionInputs.songMetadataURI,
+            editionInputs.metadataAnimationURI,
+            editionInputs.metadataImageURI
+          ]
+        )
+      ]
+    })
 
-  const { write: rinkebyWrite } = useContractWrite(rinkebyConfig)
+    const { data: mainnetEditionData, isError: mainnetEditionError, isLoading: mainnetEditionLoading, write: mainnetWrite } = useContractWrite({
+      mode: 'recklesslyUnprepared',
+      addressOrName: ZoraNFTCreatorProxy_ADDRESS_MAINNET,
+      contractInterface: manualZoraNFTCreatorV1.abi,
+      functionName: 'setupDropsContract',
+      args: [
+        editionInputs.contractName,
+        editionInputs.contractSymbol,
+        editionInputs.contractAdmin,
+        editionInputs.contractMaxSupply,
+        editionInputs.secondaryRoyalties,
+        editionInputs.fundsRecipient,
+        [
+          dealWithEther(editionInputs.salesConfig.priceEther),
+          editionInputs.salesConfig.perWalletMintCap,
+          editionInputs.salesConfig.publicSaleStart,
+          editionInputs.salesConfig.publicSaleEnd,
+          editionInputs.salesConfig.presaleStart,
+          editionInputs.salesConfig.presaleEnd,
+          editionInputs.salesConfig.presaleMerkleRoot
+        ],
+        FlexibleEditionMetadataRenderer_ADDRESS_MAINNET,
+        utils.defaultAbiCoder.encode(
+          [
+            "string",
+            "string",
+            "string"
+          ],
+          [
+            editionInputs.songMetadataURI,
+            editionInputs.metadataAnimationURI,
+            editionInputs.metadataImageURI
+          ]
+        )
+      ]
+    })    
+    
+
+  // // new calls - rinkeby
+  // const { config: rinkebyConfig, error: rinkebyError } = usePrepareContractWrite({
+  //   addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
+  //   contractInterface: zoranftcreatorv1abicustom.abi,
+  //   functionName: 'setupDropsContract',
+  //   args: [
+  //     editionInputs.contractName,
+  //     editionInputs.contractSymbol,
+  //     editionInputs.contractAdmin,
+  //     editionInputs.contractMaxSupply,
+  //     editionInputs.secondaryRoyalties,
+  //     editionInputs.fundsRecipient,
+  //     [
+  //       dealWithEther(editionInputs.salesConfig.priceEther),
+  //       editionInputs.salesConfig.perWalletMintCap,
+  //       editionInputs.salesConfig.publicSaleStart,
+  //       editionInputs.salesConfig.publicSaleEnd,
+  //       editionInputs.salesConfig.presaleStart,
+  //       editionInputs.salesConfig.presaleEnd,
+  //       editionInputs.salesConfig.presaleMerkleRoot
+  //     ],
+  //     FlexibleEditionMetadataRenderer_ADDRESS_RINKEBY,
+  //     utils.defaultAbiCoder.encode(
+  //       [
+  //         "string",
+  //         "string",
+  //         "string"
+  //       ],
+  //       [
+  //         editionInputs.songMetadataURI,
+  //         editionInputs.metadataAnimationURI,
+  //         editionInputs.metadataImageURI
+  //       ]
+  //     )
+  //   ],
+  //   onError(rinkebyError) {
+  //     console.log("rinkeby error", rinkebyError)
+  //   },
+  // })
+
+  // const { write: rinkebyWrite } = useContractWrite(rinkebyConfig)
 
   // new calls - mainnet
 
-  const { config: mainnetConfig, error: mainnetError } = usePrepareContractWrite({
-    addressOrName: ZoraNFTCreatorProxy_ADDRESS_MAINNET,
-    contractInterface: ZoraNFTCreatorV1_ABI.abi,
-    functionName: 'setupDropsContract',
-    args: [
-      editionInputs.contractName,
-      editionInputs.contractSymbol,
-      editionInputs.contractAdmin,
-      editionInputs.contractMaxSupply,
-      editionInputs.secondaryRoyalties,
-      editionInputs.fundsRecipient,
-      [
-        dealWithEther(editionInputs.salesConfig.priceEther),
-        editionInputs.salesConfig.perWalletMintCap,
-        editionInputs.salesConfig.publicSaleStart,
-        editionInputs.salesConfig.publicSaleEnd,
-        editionInputs.salesConfig.presaleStart,
-        editionInputs.salesConfig.presaleEnd,
-        editionInputs.salesConfig.presaleMerkleRoot
-      ],
-      FlexibleEditionMetadataRenderer_ADDRESS_MAINNET,
-      utils.defaultAbiCoder.encode(
-        [
-          "string",
-          "string",
-          "string"
-        ],
-        [
-          editionInputs.songMetadataURI,
-          editionInputs.metadataAnimationURI,
-          editionInputs.metadataImageURI
-        ]
-      )
-    ]
-  })
+  // const { config: mainnetConfig, error: mainnetError } = usePrepareContractWrite({
+  //   addressOrName: ZoraNFTCreatorProxy_ADDRESS_MAINNET,
+  //   contractInterface: ZoraNFTCreatorV1_ABI.abi,
+  //   functionName: 'setupDropsContract',
+  //   args: [
+  //     editionInputs.contractName,
+  //     editionInputs.contractSymbol,
+  //     editionInputs.contractAdmin,
+  //     editionInputs.contractMaxSupply,
+  //     editionInputs.secondaryRoyalties,
+  //     editionInputs.fundsRecipient,
+  //     [
+  //       dealWithEther(editionInputs.salesConfig.priceEther),
+  //       editionInputs.salesConfig.perWalletMintCap,
+  //       editionInputs.salesConfig.publicSaleStart,
+  //       editionInputs.salesConfig.publicSaleEnd,
+  //       editionInputs.salesConfig.presaleStart,
+  //       editionInputs.salesConfig.presaleEnd,
+  //       editionInputs.salesConfig.presaleMerkleRoot
+  //     ],
+  //     FlexibleEditionMetadataRenderer_ADDRESS_MAINNET,
+  //     utils.defaultAbiCoder.encode(
+  //       [
+  //         "string",
+  //         "string",
+  //         "string"
+  //       ],
+  //       [
+  //         editionInputs.songMetadataURI,
+  //         editionInputs.metadataAnimationURI,
+  //         editionInputs.metadataImageURI
+  //       ]
+  //     )
+  //   ]
+  // })
 
-  const { write: mainnetWrite } = useContractWrite(mainnetConfig)  
+  // const { write: mainnetWrite } = useContractWrite(mainnetConfig)  
 
   useEffect(() => {
     if(!chain) {
@@ -805,7 +881,7 @@ const Create: NextPage = () => {
           </div>        
           <div className="flex flex-row justify-center w-full h-fit border-2 border-blue-500 border-solid">
           <button
-              disabled={false}
+              disabled={!rinkebyWrite}
               className="border-2 hover:bg-white hover:text-black border-solid border-blue-500 py-1 flex flex-row w-full justify-center"
               onClick={() => createEditionRinkeby()}
             >
