@@ -48,7 +48,7 @@ const Create: NextPage = () => {
     songMetadataURI: "contractURI/",
     metadataAnimationURI: "animationURI/",
     metadataImageURI: "imageURI/",
-  })  
+  })   
 
   const { chain } = useNetwork()
 
@@ -185,43 +185,6 @@ const Create: NextPage = () => {
   })
 
   const { write: rinkebyWrite } = useContractWrite(rinkebyConfig)
-
-  // const { data: rinkebyEditionData, isError: rinkebyEditionError, isLoading: rinkebyEditionLoading, write: rinkebyWrite } = useContractWrite({
-  //   mode: 'recklesslyUnprepared',
-  //   addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
-  //   contractInterface: ZoraNFTCreatorV1_ABI.abi,
-  //   functionName: 'setupDropsContract',
-  //   args: [
-  //     editionInputs.contractName,
-  //     editionInputs.contractSymbol,
-  //     editionInputs.contractAdmin,
-  //     editionInputs.contractMaxSupply,
-  //     editionInputs.secondaryRoyalties,
-  //     editionInputs.fundsRecipient,
-  //     [
-  //       dealWithEther(editionInputs.salesConfig.priceEther),
-  //       editionInputs.salesConfig.perWalletMintCap,
-  //       editionInputs.salesConfig.publicSaleStart,
-  //       editionInputs.salesConfig.publicSaleEnd,
-  //       editionInputs.salesConfig.presaleStart,
-  //       editionInputs.salesConfig.presaleEnd,
-  //       editionInputs.salesConfig.presaleMerkleRoot
-  //     ],
-  //     FlexibleEditionMetadataRenderer_ADDRESS_RINKEBY,
-  //     utils.defaultAbiCoder.encode(
-  //       [
-  //         "string", 
-  //         "string", 
-  //         "string"
-  //       ],
-  //       [
-  //         editionInputs.songMetadataURI,
-  //         editionInputs.metadataAnimationURI,
-  //         editionInputs.metadataImageURI
-  //       ]
-  //     )
-  //   ]
-  // })  
 
   // new calls - mainnet
 
