@@ -15,7 +15,7 @@ export default function SongForm({
     setMinting,
     editionInputs,
     setEditionInputs,
-    // setMetadataStatus
+    setMetadataStatus
 }) {
 
     // TRACK STATE

@@ -758,7 +758,7 @@ const Create: NextPage = () => {
                 <div
                 className="flex flex-row justify-center items-start text-center border-l-2 border-r-2 border-b-2 "
                 >
-                  {/* {metadataStatus} */}
+                  {metadataStatus}
                 </div>
               </div>
             </div>            
@@ -770,7 +770,7 @@ const Create: NextPage = () => {
             setMinting={setMinting}
             editionInputs={editionInputs}
             setEditionInputs={setEditionInputs}
-            // setMetadataStatus={setMetadataStatus}
+            setMetadataStatus={setMetadataStatus}
           />              
         </div>
 
