@@ -18,7 +18,7 @@ import { AppWrapper } from '../context/useAppContext';
 
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.rinkeby],
+  [chain.rinkeby],
   [
     // alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_ALCHMEY_ID }),
     publicProvider()
