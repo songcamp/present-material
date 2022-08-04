@@ -21,7 +21,7 @@ export const Header = () => {
           </a>
         </Link>     
         <Link
-          href="/"
+          href="/collect"
         >
           <a className="hover:text-[#f53bc3]">
             COLLECT
