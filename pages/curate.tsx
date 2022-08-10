@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
 
-const Manage: NextPage = () => {
+const Curate: NextPage = () => {
 
     const [collection, setCollection] = useState({
         collectionAddress: ""
@@ -177,4 +177,4 @@ const Manage: NextPage = () => {
     )
 }
 
-export default Manage
+export default Curate
