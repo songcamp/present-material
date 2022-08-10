@@ -92,7 +92,7 @@ const Manage: NextPage = () => {
             return (
                 collectionData.map((collection, index) => {
                     return (
-                        <div>
+                        <div key={collection}>
                             {(index + 1) + ". " + collection}
                         </div>
                     )
