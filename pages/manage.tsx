@@ -111,7 +111,7 @@ const Manage: NextPage = () => {
             </Head>
             <Header/>
             <main className=" h-[100%] flex flex-col flex-wrap text-[#00c2ff]">
-                <div className="z-10 bg-[url('/inicio_03.jpg')] bg-cover h-full w-6/12 flex flex-col flex-wrap justify-center items-center">                
+                <div className="z-10 bg-[url('/access_token_1.png')] bg-cover h-full w-6/12 flex flex-col flex-wrap justify-center items-center">                
                 </div>
                 <div className="w-6/12 h-full  flex flex-col flex-wrap justify-center items-center">
                     {/* <div className="w-[20%] min-w-[200px] text-center mb-1">
