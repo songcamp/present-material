@@ -43,8 +43,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         chains={chains} 
         theme={darkTheme({
           borderRadius: "none",
-          accentColor: "black",
-          accentColorForeground: "white"
+          accentColor: "#00c2ff",
+          accentColorForeground: "black"
       })}>
         <AppWrapper>
           <Component {...pageProps} />
