@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         theme={darkTheme({
           borderRadius: "none",
           accentColor: "#00c2ff",
-          accentColorForeground: "black"
+          accentColorForeground: "#0E0411"
       })}>
         <AppWrapper>
           <Component {...pageProps} />

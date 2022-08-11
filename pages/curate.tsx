@@ -3,12 +3,17 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { useAccount, useContractRead, useContractWrite, useEnsName } from 'wagmi'
 import { Header } from '../components/Header'
 import UserNFTs from '../components/UserNFTs';
 import Link from 'next/link';
 import Image from 'next/image';
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
+
+const allContent = "#00C2FF"
+const clickables = "#7DE0FF"
+const background = "#0E0411"
+
 
 const Curate: NextPage = () => {
 
@@ -16,7 +21,7 @@ const Curate: NextPage = () => {
         collectionAddress: ""
     })
 
-    const { address: account } = useAccount(); 
+    const { address: account } = useAccount({}); 
     const currentUserAddress = account ? account : ""
     console.log("currentUseraddress: ", currentUserAddress)
 
@@ -35,7 +40,50 @@ const Curate: NextPage = () => {
     })
 
     const collectionData = data ? data : []
-    
+
+
+    const shortenAddress = (address) => {
+        const shortenedAddress = address.slice(0, 4) + "..." + address.slice(address.length - 4)
+        return shortenedAddress
+    }
+
+    const addressToENS = (inputAddress) => {    
+        if (!data) {
+            return "loading"
+        }  else {
+            const { data, isError, isLoading, isSuccess, isFetching  } = useEnsName({
+                address: inputAddress, 
+            })
+            if (data === undefined) {
+                return shortenAddress(inputAddress[0])
+            } else {
+                return data.slice(0,4)
+            }
+        }
+    }        
+
+    const getSpecificCurator = (collectionToCheck) => {    
+        if (!data) {
+            return "loading"
+        }  else {
+            const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
+                addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+                contractInterface: presentMaterialsCurator.abi,
+                functionName: 'viewCuratorByCollection',
+                args: [
+                    collectionToCheck
+                ],
+                watch: false,
+                onError(error) {
+                    console.log("error: ", isError)
+                },
+                onSuccess(data) {
+                    console.log("Array of current collections --> ", data)
+                }  
+            })
+            return addressToENS(data)
+        }
+    }    
 
     // add collection call
     const { 
@@ -71,15 +119,6 @@ const Curate: NextPage = () => {
         ]
     })        
 
-    // const divCity = (collections) => {
-    //     collections.map((collection, index)) => {
-    //         <div key={collection}>
-    //             <div>
-    //                 {collection}
-    //             </div>
-    //         </div>
-    //     }
-    // }
 
     const showActiveCollections = () => {
         if (collectionData.length === 0) {
@@ -92,8 +131,10 @@ const Curate: NextPage = () => {
             return (
                 collectionData.map((collection, index) => {
                     return (
-                        <div key={collection}>
-                            {(index + 1) + ". " + collection}
+                        <div className="w-full">
+                            <div key={collection}>
+                                {(index + 1) + ". " + shortenAddress(collection) + " | " + "Curated By " + getSpecificCurator(collection) }
+                            </div>
                         </div>
                     )
                 })                
@@ -103,30 +144,32 @@ const Curate: NextPage = () => {
 
 
     return (
-        <div className=' h-screen min-h-screen '>
+        <div className=' h-screen min-h-screen bg-[#0E0411]'>
             <Head>
                 <title>present materials</title>
                 <meta name="description" content="present materials" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
-            <main className=" h-[100%] flex flex-col flex-wrap text-[#00c2ff]">
-                <div className="z-10 bg-[url('/access_token_1.png')] bg-cover h-full w-6/12 flex flex-col flex-wrap justify-center items-center">                
+            <main className={` h-[100%] flex flex-row sm:flex-col flex-wrap text-[#00C2FF]`}>
+                <div className="z-1 bg-[url('/access_token_1.png')] bg-contain sm:bg-cover h-[50%] sm:h-full w-full sm:w-6/12 flex flex-row flex-wrap justify-center items-center">                
                 </div>
-                <div className="w-6/12 h-full  flex flex-col flex-wrap justify-center items-center">
-                    {/* <div className="w-[20%] min-w-[200px] text-center mb-1">
-                        <Image  width={500}
-                            height={500} src="https://ipfs.io/ipfs/bafybeihtbkqe27zo32njducvwncl73mmzj5w5ag634r7y5g6yykfdlfh3y" />
-                    </div> */}
-                    <div className="mb-2 text-4xl" >
-                    {"STORE FRONT MANAGER"}
+                <div className="flex flex-col flex-wrap  sm:h-full  w-full sm:w-6/12  justify-start sm:justify-center items-center">
+                    <div className=" text-center  mb-5 sm:mb-2 text-4xl" >
+                    {"CURATION MANAGER"}
                     </div>
-                    <div className="mb-20 text-lg" >
-                    {"If you own $PRESENT you can update the storefront"}
+                    <div className=" text-center mb-5 sm:mb-20 text-lg" >
+                    {"If you own $PRESENT you can update the "}
+                        <a 
+                        className="underline hover:text-[#7DE0FF]"
+                        href="https://rinkeby.etherscan.io/address/0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb"
+                        >
+                        storefront
+                        </a>                    
                     </div>
                     <div className="mb-2 flex flex-row">
                         <div className="mb-2 flex items-center  text-lg" >
-                        {"Are you a manager ? "}
+                        {"Are you a manager -> "}
                         </div>
                         <div className=" bg-[#00c2ff] text-black rounded mb-2  w-fit px-1  justify-self-center  ml-1 flex items-center">
                             {"YES/NO"}
@@ -135,7 +178,7 @@ const Curate: NextPage = () => {
                     <input         
                         required
                         type="text"           
-                        className=" bg-black placeholder:text-[#005C77] border-[#00c2ff] text-[#00c2ff] border-2 border-solid pl-[1px] mb-4"
+                        className={`bg-[#1a0121] placeholder:text-[#005C77] border-[#00C2FF] border-2 border-solid pl-[1px] mb-4`}
                         placeholder='Contract Address'
                         value={collection.collectionAddress}
                         onChange={(e) => {
@@ -151,23 +194,23 @@ const Curate: NextPage = () => {
                     </input>
                     <div className="space-x-2">
                         <button 
-                            className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#00c2ff] hover:text-black"
+                            className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
                             onClick={() => addCollectionWrite()}
                         >
                             Add
                         </button>
                         <button 
-                            className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#00c2ff] hover:text-black"
+                            className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
                             onClick={() => removeCollectionWrite()}
                         >
                             Remove
                         </button>             
                     </div>
-                    <div className="flex flex-row flex-wrap mt-20 justify-center">
+                    <div className=" flex flex-row w-full flex-wrap mt-5 sm:mt-20 justify-center">
                         <div className="text-center text-3xl mb-2 w-full">
                             ACTIVE COLLECTIONS:
                         </div>
-                        <div>
+                        <div className="justify-center">
                             {showActiveCollections()}
                         </div>
                     </div>                                 
