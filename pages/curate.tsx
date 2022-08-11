@@ -144,7 +144,7 @@ const Curate: NextPage = () => {
 
 
     return (
-        <div className=' h-screen min-h-screen bg-[#0E0411]'>
+        <div className=' h-screen min-h-screen bg-[#0E0411] scrollbar-thin scrollbar-thumb-black scrollbar-track-gray-800'>
             <Head>
                 <title>present materials</title>
                 <meta name="description" content="present materials" />

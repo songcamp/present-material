@@ -15,6 +15,7 @@ import {
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { AppWrapper } from '../context/useAppContext';
+import Scrollbars from 'react-custom-scrollbars-2';
 
 
 const { chains, provider } = configureChains(
