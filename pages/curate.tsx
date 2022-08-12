@@ -3,12 +3,13 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
-import { useAccount, useContractRead, useContractWrite, useEnsName } from 'wagmi'
+import { useAccount, useContractRead, useContractWrite, useEnsName, useContractReads } from 'wagmi'
 import { Header } from '../components/Header'
 import UserNFTs from '../components/UserNFTs';
 import Link from 'next/link';
 import Image from 'next/image';
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
+import { GetSpecificCurator } from '../components/ActiveCollections';
 
 const allContent = "#00C2FF"
 const clickables = "#7DE0FF"
@@ -40,50 +41,6 @@ const Curate: NextPage = () => {
     })
 
     const collectionData = data ? data : []
-
-
-    const shortenAddress = (address) => {
-        const shortenedAddress = address.slice(0, 4) + "..." + address.slice(address.length - 4)
-        return shortenedAddress
-    }
-
-    const addressToENS = (inputAddress) => {    
-        if (!data) {
-            return "loading"
-        }  else {
-            const { data, isError, isLoading, isSuccess, isFetching  } = useEnsName({
-                address: inputAddress, 
-            })
-            if (data === undefined) {
-                return shortenAddress(inputAddress[0])
-            } else {
-                return data.slice(0,4)
-            }
-        }
-    }        
-
-    const getSpecificCurator = (collectionToCheck) => {    
-        if (!data) {
-            return "loading"
-        }  else {
-            const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-                addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-                contractInterface: presentMaterialsCurator.abi,
-                functionName: 'viewCuratorByCollection',
-                args: [
-                    collectionToCheck
-                ],
-                watch: false,
-                onError(error) {
-                    console.log("error: ", isError)
-                },
-                onSuccess(data) {
-                    console.log("Array of current collections --> ", data)
-                }  
-            })
-            return addressToENS(data)
-        }
-    }    
 
     // add collection call
     const { 
@@ -131,10 +88,8 @@ const Curate: NextPage = () => {
             return (
                 collectionData.map((collection, index) => {
                     return (
-                        <div className="w-full">
-                            <div key={collection}>
-                                {(index + 1) + ". " + shortenAddress(collection) + " | " + "Curated By " + getSpecificCurator(collection) }
-                            </div>
+                        <div key={collection} className="w-full">
+                            <GetSpecificCurator index={index} collectionToCheck={collection} />                             
                         </div>
                     )
                 })                
@@ -213,7 +168,7 @@ const Curate: NextPage = () => {
                         <div className="justify-center">
                             {showActiveCollections()}
                         </div>
-                    </div>                                 
+                    </div>
                 </div>
             </main>
         </div>

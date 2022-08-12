@@ -22,14 +22,14 @@ export const Header = () => {
             <Link
                 href="/collect"
               >
-                <a className="hover:text-[#f53bc3]">
+                <a className="hover:text-[#7DE0FF]">
                   Collect
                 </a>
             </Link>   
             <Link
               href="/curate"
             >
-              <a className="hover:text-[#f53bc3]">
+              <a className="hover:text-[#7DE0FF]">
                 Curate
               </a>
             </Link>        
@@ -37,7 +37,7 @@ export const Header = () => {
               className="pr-5"
               href="/about"
             >
-              <a className="hover:text-[#f53bc3]">
+              <a className="hover:text-[#7DE0FF]">
                 About
               </a>
             </Link>
