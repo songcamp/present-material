@@ -20,7 +20,7 @@ export const Header = () => {
         <div className="flex flex-row items-center">
           <div className="mr-5 space-x-4">
             <Link
-                href="/collect"
+                href="/"
               >
                 <a className="hover:text-[#7DE0FF]">
                   Collect
