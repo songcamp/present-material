@@ -26,6 +26,7 @@ export const GetSpecificCurator = ({ collectionToCheck, index }) => {
         addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
         contractInterface: presentMaterialsCurator.abi,
         functionName: 'viewCuratorByCollection',
+        enabled: false,
         args: [
             collectionToCheck
         ],
@@ -40,6 +41,7 @@ export const GetSpecificCurator = ({ collectionToCheck, index }) => {
 
     const { data: ensData, isError: ensError, isLoading: ensLoading, isSuccess: ensSuccess, isFetching: ensIsFetching  } = useEnsName({
         address: data[0], 
+        enabled: false
     })        
 
     const ensToRender = ensData && ensData != undefined 
