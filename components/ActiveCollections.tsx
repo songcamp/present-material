@@ -18,6 +18,10 @@ const shortenAddress = (address) => {
 
 export const GetSpecificCurator = ({ collectionToCheck, index }) => {
 
+
+    console.log("what is index getting passed in: ", index)
+    console.log("what is getting passed in : ", collectionToCheck)
+
     const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
         addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
         contractInterface: presentMaterialsCurator.abi,
@@ -44,14 +48,16 @@ export const GetSpecificCurator = ({ collectionToCheck, index }) => {
 
 
     return (
-        <div className="">
-            {/* <div className="text-center text-3xl mb-2 w-full">
-                ACTIVE COLLECTIONS:
-            </div> */}
-            {/* <div className="justify-center">
-                {showActiveCollections()}
-            </div> */}
-            {(index + 1) + ". " + shortenAddress(collectionToCheck) + " | " + "Curated by: " + ensToRender}
-        </div>  
+        <>
+            {!!collectionToCheck  ? ( 
+            <div className="">
+                {(index + 1) + ". " + shortenAddress(collectionToCheck) + " | " + "Curated by: " + ensToRender}
+            </div>                  
+            ) : (
+                <div>
+                collection loading ...
+                </div>
+            )}
+        </>
     )
 }
