@@ -327,7 +327,7 @@ const Home: NextPage = () => {
     },
   })  
 
-  // pull in the proper info my g
+  // pull in the proper info fam
 
   // Query array of all active curators
   const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
@@ -344,6 +344,25 @@ const Home: NextPage = () => {
   })
   
   const collectionData = data ? data : []
+
+  // read calllllllll
+
+    // Query array of all active curators
+    const { data: readData, isError: readError  } = useContractRead({
+      addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+      contractInterface: presentMaterialsCurator.abi,
+      functionName: 'viewAllCollections',
+      watch: true,
+      chainId: 4,
+      onError(error) {
+          console.log("error: ", isError)
+      },
+      onSuccess(data) {
+          console.log("Array of current collections --> ", data)
+      }  
+  })
+
+  const curatorsData = data ? data : []  
 
 
   // useEffects
@@ -378,278 +397,17 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <main className="border-l-2 border-r-2 border-t-2 border-white border-solid text-white grid  grid-rows-3 sm:grid-cols-3 h-fit ">        
-        
-        <div className='mt-24 sm:mt-12 flex flex-row flex-wrap content-start'>
-          <div className='h-fit content-start flex flex-row flex-wrap w-full'>
-            <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              EDITION 1
-            </div>
-            <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              {`TRACK: ${edition1SongMetadata.title}`}
-            </div>
-            <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              {`ARTIST: ${edition1SongMetadata.artist}`}
-            </div>            
-          </div>
-          <div className="mt-2  w-full h-fit flex flex-row flex-wrap justify-center "> 
-            <Image
-              src={`https://ipfs.io/ipfs/${edition1AnimationCID}`}
-              width={400}
-              height={400}
-            />
-            { edition1ImageCID ? (
-            <audio
-              className="my-2"
-              controls
-              src={`https://ipfs.io/ipfs/${edition1ImageCID}`}              
-            />
-            ) : (
-              <div>
-                Fetching audio ...
-              </div>
-            )}              
-            <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full">
-                <div 
-                  className="align-center"
+      <main className=" border-white border-solid text-white grid  grid-rows-3 sm:grid-cols-3 h-fit ">        
 
-                >
-                  {"Contract Address :"}
-                </div>
-                <a 
-                  href={`https://etherscan.io/address/${edition1_address}`}
-                  className="ml-1 hover:text-[#f53bc3] text-center"
-                >
-                {edition1_address.substring(0, 4) + "..." + edition1_address.substring(edition1_address.length, edition1_address.length - 4)}
-                </a>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Price :
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  {edition1SalePrice + " ETH"}
-                </div>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Number minted :
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  { edition1SaleMaxSupply === "0" ? (
-                    <>
-                    { edition1SaleTotalMinted + " | " + " ∞ " }
-                    </>
-                  ) : (
-                    <>
-                    { edition1SaleTotalMinted + " | " + edition1SaleMaxSupply }
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Minting Status : 
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  { edition1SaleActive ? "Active" : "Inactive" }
-                </div>
-              </div>
-              <div className="mt-4 w-full flex flex-row justify-center">
-                <MintQuantity colorScheme={vibes}/>
-                <button 
-                  className="flex flex-row justify-self-start  text-2xl  p-3  w-fit h-fit border-2 border-solid border-white hover:bg-white hover:text-black"
-                  onClick={() => mintWrite1()}   
-                  >
-                  Mint
-                </button>
-              </div>                                                                         
-            </div>                   
-          </div>
-        </div>
-
-        <div className='mt-24 sm:mt-12 flex flex-row flex-wrap content-start'>
-          <div className='h-fit content-start flex flex-row flex-wrap w-full'>
-            <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              EDITION 2
-            </div>
-            <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              {`TRACK: ${edition2SongMetadata.title}`}
-            </div>
-            <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              {`ARTIST: ${edition2SongMetadata.artist}`}
-            </div>            
-          </div>
-          <div className="mt-2  w-full h-fit flex flex-row flex-wrap justify-center "> 
-            <Image
-              src={`https://ipfs.io/ipfs/${edition2AnimationCID}`}
-              width={400}
-              height={400}
-            />
-            { edition2ImageCID ? (
-            <audio
-              className="my-2"
-              controls
-              src={`https://ipfs.io/ipfs/${edition2ImageCID}`}              
-            />
-            ) : (
-              <div>
-                Fetching audio ...
-              </div>
-            )}                  
-            <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full">
-                <div 
-                  className="align-center"
-
-                >
-                  {"Contract Address :"}
-                </div>
-                <a 
-                  href={`https://etherscan.io/address/${edition2_address}`}
-                  className="ml-1 hover:text-[#f53bc3] text-center"
-                >
-                {edition2_address.substring(0, 4) + "..." + edition2_address.substring(edition2_address.length, edition2_address.length - 4)}
-                </a>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Price :
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  {edition2SalePrice + " ETH"}
-                </div>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Number minted :
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  { edition2SaleMaxSupply === "0" ? (
-                    <>
-                    { edition2SaleTotalMinted + " | " + " ∞ " }
-                    </>
-                  ) : (
-                    <>
-                    { edition2SaleTotalMinted + " | " + edition2SaleMaxSupply }
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Minting Status : 
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  { edition2SaleActive ? "Active" : "Inactive" }
-                </div>
-              </div>
-              <div className="mt-4 w-full flex flex-row justify-center">
-                <MintQuantity colorScheme={vibes}/>
-                <button 
-                  className="flex flex-row justify-self-start  text-2xl  p-3  w-fit h-fit border-2 border-solid border-white hover:bg-white hover:text-black"
-                  onClick={() => mintWrite2()}   
-                  >
-                  Mint
-                </button>
-              </div>                                                                        
-            </div>                   
-          </div>
-        </div>
-
-        <div className='mt-24 sm:mt-12 flex flex-row flex-wrap content-start'>
-          <div className='h-fit content-start flex flex-row flex-wrap w-full'>
-            <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              EDITION 3
-            </div>
-            <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              {`TRACK: ${edition3SongMetadata.title}`}
-            </div>
-            <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              {`ARTIST: ${edition3SongMetadata.artist}`}
-            </div>            
-          </div>
-          <div className="mt-2  w-full h-fit flex flex-row flex-wrap justify-center "> 
-            <Image
-              src={`https://ipfs.io/ipfs/${edition3AnimationCID}`}
-              width={400}
-              height={400}
-            />
-            { edition3ImageCID ? (
-            <audio
-              className="my-2"
-              controls
-              src={`https://ipfs.io/ipfs/${edition3ImageCID}`}              
-            />
-            ) : (
-              <div>
-                Fetching audio ...
-              </div>
-            )}                 
-            <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full">
-                <div 
-                  className="align-center"
-
-                >
-                  {"Contract Address :"}
-                </div>
-                <a 
-                  href={`https://etherscan.io/address/${edition3_address}`}
-                  className="ml-1 hover:text-[#f53bc3] text-center"
-                >
-                {edition3_address.substring(0, 4) + "..." + edition3_address.substring(edition3_address.length, edition3_address.length - 4)}
-                </a>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Price :
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  {edition3SalePrice + " ETH"}
-                </div>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Number minted :
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  { edition3SaleMaxSupply === "0" ? (
-                    <>
-                    { edition3SaleTotalMinted + " | " + " ∞ " }
-                    </>
-                  ) : (
-                    <>
-                    { edition3SaleTotalMinted + " | " + edition3SaleMaxSupply }
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="justify-center flex flex-row w-full">
-                <div className=" mt-1 self-center">
-                  Minting Status : 
-                </div>
-                <div className=" mt-1 ml-1 self-center">
-                  { edition3SaleActive ? "Active" : "Inactive" }
-                </div>
-              </div> 
-              <div className="mt-4 w-full flex flex-row justify-center">
-                <MintQuantity colorScheme={vibes}/>
-                <button 
-                  className="flex flex-row justify-self-start  text-2xl  p-3  w-fit h-fit border-2 border-solid border-white hover:bg-white hover:text-black"
-                  onClick={() => mintWrite3()}   
-                  >
-                  Mint
-                </button>
-              </div>                                                                                
-            </div>                   
-          </div>
-        </div>
-
-        <div className="text-white">
-          <EditionCard editionAddress={collectionData[4]} />
-        </div>
+      {
+        curatorsData.map((curator, index) => {
+          while (index < curatorsData.length) {
+            return (
+              <EditionCard editionAddress={curatorsData[index]} />
+            )
+          }
+        })
+      }
 
       </main>
     </div>
