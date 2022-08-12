@@ -1,17 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { Dispatch, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
-import { NFTPreview, MediaConfiguration } from '@zoralabs/nft-components';
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
-import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
-import asksABI from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
-import zmmABI from "@zoralabs/v3/dist/artifacts/ZoraModuleManager.sol/ZoraModuleManager.json"
 import { erc721ABI, useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-
 
 import { useAppContext } from '../context/useAppContext';
 import MintQuantity from '../components/MintQuantity';
@@ -22,6 +17,9 @@ const FlexibleEditionMetadataRenderer_ADDRESS_RINKEBY = "0x395488b2a175aEb5c007d
 const edition1_address = "0xa88b28061ad8d614d641a9eab66c1401ad0edde8"
 const edition2_address = "0x6486aa21d5f5c1a851df21854c1a51e5b515ec3f"
 const edition3_address = "0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"
+import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
+
+import EditionCard from '../components/EditionCard';
 
 const vibes = "#ffffff"
 
@@ -82,7 +80,7 @@ const Home: NextPage = () => {
       console.log("error: ", edition1Error)
     },
     onSuccess(data) {
-      console.log("edition1 inmfo", edition1Data)
+      // console.log("edition1 inmfo", edition1Data)
     }  
   })
 
@@ -98,7 +96,7 @@ const Home: NextPage = () => {
       console.log("error: ", edition2Error)
     },
     onSuccess(data) {
-      console.log("edition2 inmfo", edition2Data)
+      // console.log("edition2 inmfo", edition2Data)
     }  
   })
   
@@ -114,14 +112,13 @@ const Home: NextPage = () => {
       console.log("error: ", edition3Error)
     },
     onSuccess(data) {
-      console.log("edition3 inmfo", edition3Data)
+      // console.log("edition3 inmfo", edition3Data)
     }  
   })  
 
   // data validation for uri information
 
   const edition1ImageCID = edition1Data ? edition1Data.imageURI.slice(7) : ""
-  console.log("what is edition1imageCID: ", edition1ImageCID)
   const edition2ImageCID = edition2Data ? edition2Data.imageURI.slice(7) : ""
   const edition3ImageCID = edition3Data ? edition3Data.imageURI.slice(7) : ""
 
@@ -137,11 +134,11 @@ const Home: NextPage = () => {
 
   const fetchEdition1Info = () => {
     const ipfsPathway = `https://ipfs.io/ipfs/${edition1MetadataCID}`
-    console.log("ipfspathway1 url: ", ipfsPathway)
+    // console.log("ipfspathway1 url: ", ipfsPathway)
     fetch(ipfsPathway)
       .then(result => result.json())
       .then((output) => {
-        console.log("output1 :", output)
+        // console.log("output1 :", output)
         setEdition1SongMetadata(output)
       }).catch(err => console.error(err))
     
@@ -149,22 +146,22 @@ const Home: NextPage = () => {
 
   const fetchEdition2Info = () => {
     const ipfsPathway = `https://ipfs.io/ipfs/${edition2MetadataCID}`
-    console.log("ipfspathway2 url: ", ipfsPathway)
+    // console.log("ipfspathway2 url: ", ipfsPathway)
     fetch(ipfsPathway)
       .then(result => result.json())
       .then((output) => {
-        console.log("output2 :", output)
+        // console.log("output2 :", output)
         setEdition2SongMetadata(output)
       }).catch(err => console.error(err))
   }
   
   const fetchEdition3Info = () => {
     const ipfsPathway = `https://ipfs.io/ipfs/${edition3MetadataCID}`
-    console.log("ipfspathway3 url: ", ipfsPathway)
+    // console.log("ipfspathway3 url: ", ipfsPathway)
     fetch(ipfsPathway)
       .then(result => result.json())
       .then((output) => {
-        console.log("output3 :", output)
+        // console.log("output3 :", output)
         setEdition3SongMetadata(output)
       }).catch(err => console.error(err))
   }  
@@ -215,7 +212,7 @@ const Home: NextPage = () => {
       console.log("error: ", edition3SalesError)
     },
     onSuccess(data) {
-      console.log("edition3Sales inmfo", edition3SalesData)
+      // console.log("edition3Sales inmfo", edition3SalesData)
     }  
   })    
 
@@ -330,6 +327,25 @@ const Home: NextPage = () => {
     },
   })  
 
+  // pull in the proper info my g
+
+  // Query array of all active curators
+  const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
+    addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+    contractInterface: presentMaterialsCurator.abi,
+    functionName: 'viewAllCollections',
+    watch: true,
+    onError(error) {
+        console.log("error: ", isError)
+    },
+    onSuccess(data) {
+        console.log("Array of current collections --> ", data)
+    }  
+  })
+  
+  const collectionData = data ? data : []
+
+
   // useEffects
   useEffect(() => {
     if(!!edition1MetadataCID) {
@@ -354,7 +370,7 @@ const Home: NextPage = () => {
 
 
   return (
-    <div className='flex flex-col justify-center h-full min-h-screen scrollbar-thin scrollbar-thumb-black scrollbar-track-gray-800  ' >
+    <div className='flex flex-col justify-center h-full min-h-screen' >
       <Head>
         <title>Present Materials</title>
         <meta name="description" content="Generated by create next app" />
@@ -630,6 +646,11 @@ const Home: NextPage = () => {
             </div>                   
           </div>
         </div>
+
+        <div className="text-white">
+          <EditionCard editionAddress={collectionData[4]} />
+        </div>
+
       </main>
     </div>
   )
