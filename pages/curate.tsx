@@ -1,20 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
-import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
-import { Networks, Strategies } from "@zoralabs/nft-hooks"
-import { useAccount, useContractRead, useContractWrite, useEnsName, useContractReads } from 'wagmi'
+import { useState } from 'react'
+import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
-import UserNFTs from '../components/UserNFTs';
-import Link from 'next/link';
-import Image from 'next/image';
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
 import { GetSpecificCurator } from '../components/ActiveCollections';
 
 const allContent = "#00C2FF"
 const clickables = "#7DE0FF"
 const background = "#0E0411"
-
 
 const Curate: NextPage = () => {
 
@@ -75,7 +69,6 @@ const Curate: NextPage = () => {
             currentUserAddress,
         ]
     })        
-
 
     const showActiveCollections = () => {
         if (collectionData.length === 0) {
