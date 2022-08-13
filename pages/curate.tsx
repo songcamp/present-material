@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
-import { GetSpecificCurator } from '../components/ActiveCollections';
+import { GetSpecificCurator } from '../components/GetSpecificCurator'
 
 const allContent = "#00C2FF"
 const clickables = "#7DE0FF"
