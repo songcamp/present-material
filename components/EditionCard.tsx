@@ -7,6 +7,7 @@ import zoraDropsABI from "@zoralabs/nft-drop-contracts/dist/artifacts/ERC721Drop
 import { ethers } from 'ethers'
 import MintQuantityV2 from './MintQuantityV2'
 import PostMintDialog from './PostMintDialog'
+import { CustomAudioPlayer } from './CustomAudioPlayer'
 
 const vibes = "#ffffff"
 
@@ -21,14 +22,14 @@ const client = createClient({
 
 
 // Mint Quantity Options
-const sortOptions = [
-    { name: 'QUANTITY', queryValue: 0 },
-    { name: '1', queryValue: 1 },
-    { name: '2', queryValue: 2 },
-    { name: '3', queryValue: 3 },
-    { name: '4', queryValue: 4 },
-    { name: '5', queryValue: 5 }
-]
+// const sortOptions = [
+//     { name: 'QUANTITY', queryValue: 0 },
+//     { name: '1', queryValue: 1 },
+//     { name: '2', queryValue: 2 },
+//     { name: '3', queryValue: 3 },
+//     { name: '4', queryValue: 4 },
+//     { name: '5', queryValue: 5 }
+// ]
 
 const EditionCard = ({ editionAddress }) => {
 
@@ -212,8 +213,8 @@ const EditionCard = ({ editionAddress }) => {
                         loading . . .
                         </div>   
                         ) : (
-                        <div  className="h-[100%] w-[100%] text-white flex flex-row flex-wrap justify-center ">
-                            <div className="relative flex flex-row ">
+                        <div  className="border-[1px] border-[#00C2FF]  h-[100%] w-[100%] text-white flex flex-row flex-wrap justify-center ">
+                            <div className="relative flex flex-row w-[100%">
                                 <Image 
                                     src={editionsImageSRC}
                                     // layout={"fill"}
@@ -221,12 +222,15 @@ const EditionCard = ({ editionAddress }) => {
                                     height={400}                                                        
                                 />                            
                             </div>
-                            <audio
+                            {/* <audio
                                 className=" mt-5  flex flex-row w-full mx-[20%] justify-center"
                                 controls
                                 src={editionsAnimationSRC}
                             >
-                            </audio>
+                            </audio> */}
+                            <CustomAudioPlayer
+                                musicSRC={editionsAnimationSRC}
+                            />
                             <div className="mt-4 w-full flex flex-row justify-center">
                                 <MintQuantityV2 mintQuantityCB={setMintQuantity} colorScheme={vibes}/>
                                 <button 

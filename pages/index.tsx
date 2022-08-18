@@ -37,7 +37,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <main className=" border-white border-solid text-white grid  grid-rows-3 sm:grid-cols-3 h-fit ">        
+      <main className="border-2 text-white grid  grid-rows-3 sm:grid-cols-3 h-full ">        
 
       {
         collectionData.map((collection, index) => {

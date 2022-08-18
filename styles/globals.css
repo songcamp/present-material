@@ -4,7 +4,7 @@
 
 html,
 body {
-  background-color: black;
+  background-color: #0E0411;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -20,3 +20,55 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.rhap_container {
+  background-color: #0E0411 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #00C2FF !important;
+}
+
+.rhap_main-controls-button svg {
+  color: #00C2FF;
+}
+
+.rhap_button-clear.rhap_volume-button {
+  color: #00C2FF !important;
+}
+
+
+.rhap_volume-bar, .rhap_volume-indicator {
+  background-color: #00C2FF !important;
+}
+
+.rhap_play-status--paused .rhap_progress-bar  {
+  background-color: transparent;
+  border: 1px solid #00C2FF;
+  border-radius: 0;
+  height: 7px;
+}
+
+.rhap_play-status--playing .rhap_progress-bar {
+  background-color: transparent;
+  border: 1px solid #00C2FF;
+  border-radius: 0;
+  height: 7px;
+}
+
+.rhap_current-time, .rhap_total-time {
+  color: #00C2FF !important;
+}
+
+.rhap_progress-filled {
+  color: #00C2FF !important;
+  background-color: #00C2FF !important;
+}
+
+.rhap_progress-indicator {
+  background-color: #00C2FF !important;
+
+}
+
+/* .rhap_download-progress {
+  background-color: transparent !important;
+} */
