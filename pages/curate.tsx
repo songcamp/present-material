@@ -4,7 +4,9 @@ import { useState } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
+import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 import { GetSpecificCurator } from '../components/GetSpecificCurator'
+import { BigNumber } from 'ethers'
 
 const allContent = "#00C2FF"
 const clickables = "#7DE0FF"
@@ -22,8 +24,8 @@ const Curate: NextPage = () => {
 
     // Query array of all active curators
     const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCurator.abi,
+        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV2.abi,
         functionName: 'viewAllCollections',
         watch: true,
         onError(error) {
@@ -36,6 +38,42 @@ const Curate: NextPage = () => {
 
     const collectionData = data ? data : []
 
+    // CuratorContract Read Call --> TokenGateBalanceCheck
+    const { data: tokenGateData, isError: tokenGateError, isLoading: tokenGateLoading, isSuccess: tokenGateSuccess, isFetching: tokenGateFetching  } = useContractRead({
+        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV2.abi,
+        functionName: 'viewUserBalanceOfTokenGate',
+        watch: true,
+        args: [
+            currentUserAddress
+        ],
+        onError(tokenGateError) {
+            console.log("error: ", tokenGateError)
+        },
+        onSuccess(tokenGateData) {
+            // console.log("--> ", tokenGateData)
+        }  
+    })  
+
+    const tokenGateCheck = tokenGateData ? BigNumber.from(tokenGateData).toBigInt() : 0
+
+    // CuratorContract Read Call --> TokenGateAddress Check
+    const { data: tokeGateAddressData, isError: tokeGateAddressError, isLoading: tokeGateAddressLoading, isSuccess: tokeGateAddressSuccess, isFetching: tokeGateAddressFetching  } = useContractRead({
+        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV2.abi,
+        functionName: 'tokenGateAddress',
+        watch: true,
+        onError(tokeGateAddressError) {
+            console.log("error: ", tokeGateAddressError)
+        },
+        onSuccess(tokeGateAddressData) {
+            // console.log("tokenGateAddressCheck--> ", tokeGateAddressData)
+        }  
+    })  
+
+    const tokeGateAddressCheck = tokeGateAddressData ? tokeGateAddressData.toString() : ""    
+
+
     // add collection call
     const { 
         data: addCollectionData, 
@@ -44,8 +82,8 @@ const Curate: NextPage = () => {
         write: addCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCurator.abi,
+        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV2.abi,
         functionName: 'addCurator',
         args: [
             collection.collectionAddress,
@@ -61,8 +99,8 @@ const Curate: NextPage = () => {
         write: removeCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator // https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCurator.abi,
+        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator // https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV2.abi,
         functionName: 'removeCurator',
         args: [
             collection.collectionAddress,
@@ -110,58 +148,84 @@ const Curate: NextPage = () => {
                     {"If you own $PRESENT you can update the "}
                         <a 
                         className="underline hover:text-[#7DE0FF]"
-                        href="https://rinkeby.etherscan.io/address/0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb"
+                        href="https://rinkeby.etherscan.io/address/0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39"
                         >
                         storefront
                         </a>                    
                     </div>
-                    <div className="mb-2 flex flex-row">
-                        <div className="mb-2 flex items-center  text-lg" >
-                        {"Are you a manager -> "}
-                        </div>
-                        <div className=" bg-[#00c2ff] text-black rounded mb-2  w-fit px-1  justify-self-center  ml-1 flex items-center">
-                            {"YES/NO"}
-                        </div>
-                    </div>
-                    <input         
-                        required
-                        type="text"           
-                        className={`bg-[#1a0121] placeholder:text-[#005C77] border-[#00C2FF] border-2 border-solid pl-[1px] mb-4`}
-                        placeholder='Contract Address'
-                        value={collection.collectionAddress}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setCollection(current => {
-                                return {
-                                    ...current,
-                                    collectionAddress: e.target.value
-                                }
-                            })
-                        }}
-                    >
-                    </input>
-                    <div className="space-x-2">
-                        <button 
-                            className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
-                            onClick={() => addCollectionWrite()}
+                    { tokenGateCheck > 0 ? (          
+                    <div className="flex flex-row flex-wrap justify-center">          
+                        <div className="mb-2 flex flex-row w-full justify-center">
+                            <div className="mb-2 flex items-center  text-lg" >
+                            {"Do you own "}  
+                            <a
+                                className="ml-1 mr-1 underline hover:text-[#7DE0FF]"
+                                href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
+                            >
+                                {" $PRESENT "}    
+                            </a>
+                            {" -> "}
+                            </div>
+                            <div className=" bg-[#00c2ff] text-black rounded mb-2  w-fit px-1  justify-self-center  ml-1 flex items-center">
+                                {"YES"}
+                            </div>
+                        </div>                
+                        <input         
+                            required
+                            type="text"           
+                            className={`bg-[#1a0121] placeholder:text-[#005C77] border-[#00C2FF] border-2 border-solid pl-[1px] mb-4`}
+                            placeholder='Contract Address'
+                            value={collection.collectionAddress}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                setCollection(current => {
+                                    return {
+                                        ...current,
+                                        collectionAddress: e.target.value
+                                    }
+                                })
+                            }}
                         >
-                            Add
-                        </button>
-                        <button 
-                            className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
-                            onClick={() => removeCollectionWrite()}
-                        >
-                            Remove
-                        </button>             
-                    </div>
-                    <div className=" flex flex-row w-full flex-wrap mt-5 sm:mt-20 justify-center">
-                        <div className="text-center text-3xl mb-2 w-full">
-                            ACTIVE COLLECTIONS:
+                        </input>
+                        <div className="space-x-2 flex justify-center w-full">
+                            <button 
+                                className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
+                                onClick={() => addCollectionWrite()}
+                            >
+                                Add
+                            </button>
+                            <button 
+                                className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
+                                onClick={() => removeCollectionWrite()}
+                            >
+                                Remove
+                            </button>             
                         </div>
-                        <div className="justify-center">
-                            {showActiveCollections()}
-                        </div>
                     </div>
+                    ) : (
+                        <div>          
+                            <div className="mb-2 flex flex-row flex-wrap justify-center">
+                                <div className="flex flex-row w-full justify-center">
+                                    <div className="mb-2 flex items-center  text-lg" >
+                                    {"Do you own "}  
+                                        <a
+                                            className="ml-1 mr-1 underline hover:text-[#7DE0FF]"
+                                            href={"https://rinkeby.etherscan.io/address/0x7B9376f6d44B1EB17FFC3E176e0E33B66BAB9cFC" + tokeGateAddressCheck}
+                                        >
+                                            {" $PRESENT "}    
+                                        </a>
+                                    {" -> "}
+                                    </div>
+                                    <div className=" bg-red-800 text-black rounded mb-2  w-fit px-1  justify-self-center  ml-1 flex items-center">
+                                        {"NO"}
+                                    </div>
+                                </div>
+                                <div className="mt-5 mb-2 flex items-center text-center text-lg" >
+                                {"You do not have the ability to update the storefront"}
+                                </div>                                
+                            </div>
+                        </div>                
+                    )}
                 </div>
             </main>
         </div>

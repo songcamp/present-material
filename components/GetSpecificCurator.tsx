@@ -1,6 +1,7 @@
 
 import { useContractRead, useEnsName } from 'wagmi'
 import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
+import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 
 const shortenAddress = (address) => {
     if (!!address) {
@@ -14,8 +15,8 @@ const shortenAddress = (address) => {
 export const GetSpecificCurator = ({ collectionToCheck, index }) => {
 
     const { data: curatorData, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: "0xE5D36DF3087C19f108BBA4bb0D79143b8b4725Bb", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCurator.abi,
+        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV2.abi,
         functionName: 'viewCuratorByCollection',
         args: [
             collectionToCheck

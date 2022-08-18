@@ -14,6 +14,8 @@ import {
 } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+
+// not in use
 import { AppWrapper } from '../context/useAppContext';
 import Scrollbars from 'react-custom-scrollbars-2';
 
@@ -47,9 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           accentColor: "#00c2ff",
           accentColorForeground: "#0E0411"
       })}>
-        <AppWrapper>
           <Component {...pageProps} />
-        </AppWrapper>
       </RainbowKitProvider>
     </WagmiConfig>        
   )
