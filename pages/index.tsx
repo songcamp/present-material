@@ -45,7 +45,7 @@ const Home: NextPage = () => {
         />
       </div>
 
-      <main className="text-white grid grid-rows-3 sm:grid-cols-3 w-[85%] gap-y-8 sm:gap-y-0 gap-x-20  h-full "> 
+      <main className="text-white grid grid-rows-3 sm:grid-cols-3 w-[85%] gap-y-8 sm:gap-y-0 gap-x-0 sm:gap-x-20  h-full "> 
 
       {
         collectionData.map((collection, index) => {

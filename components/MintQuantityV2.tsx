@@ -91,7 +91,7 @@ export default function MintQuantityV2({ colorScheme, mintQuantityCB }) {
                         ))}
                     </Listbox.Options>
                     ) : (
-                    <Listbox.Options className="absolute z-[11] mt-1 max-h-60 w-full  overflow-auto  bg-[#00C2FF]  text-base  ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Listbox.Options className="absolute z-[11] mt-1 max-h-60 w-fit overflow-auto  bg-[#00C2FF]  text-base  ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {sortOptions.map((option, optionIdx) => (
                         <Listbox.Option
                         key={optionIdx}
