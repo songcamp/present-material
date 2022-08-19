@@ -20,23 +20,10 @@ const client = createClient({
     url: ZORA_DROPS_RINKEBY
 })
 
-
-// Mint Quantity Options
-// const sortOptions = [
-//     { name: 'QUANTITY', queryValue: 0 },
-//     { name: '1', queryValue: 1 },
-//     { name: '2', queryValue: 2 },
-//     { name: '3', queryValue: 3 },
-//     { name: '4', queryValue: 4 },
-//     { name: '5', queryValue: 5 }
-// ]
-
 const EditionCard = ({ editionAddress }) => {
 
     const [mintQuantity, setMintQuantity] = useState({ name: '1', queryValue: 1 })
     const [loading, setLoading] = useState(false)
-
-    const [editionReturns, setEditonReturns] = useState(null)
     const [editionsImageSRC, setEditionsImageSRC] = useState("/placeholder_400_400.png");
     const [editionsAnimationSRC, setEditionsAnimationSRC] = useState("");
     const [editionSalesInfo, setEditionSalesInfo] = useState({
@@ -65,6 +52,7 @@ const EditionCard = ({ editionAddress }) => {
     })
 
     const totalSupply = data ? BigNumber.from(data).toString() : []    
+    const tokensRemaining = editionSalesInfo && totalSupply ? Number(editionSalesInfo.maxSupply) -  Number(totalSupply) : "n/a"
 
     const shortenAddress = (address) => {
         const shortenedAddress = address.slice(0, 4) + "..." + address.slice(address.length - 4)
@@ -125,7 +113,6 @@ const EditionCard = ({ editionAddress }) => {
             setLoading(true);
             const queryResults = await runningPromise()
             const cleanedQueryResults = cleanData(queryResults)
-            setEditonReturns(cleanedQueryResults)
 
             const imageURI = cleanedQueryResults.editionMetadata.imageURI
             const imageIPFSGateway = handleIpfsHash(imageURI)
@@ -154,17 +141,10 @@ const EditionCard = ({ editionAddress }) => {
         } 
     }
 
-
-
-    // VARIABLES
-
-    const tokensRemaining = editionSalesInfo && totalSupply ? Number(editionSalesInfo.maxSupply) -  Number(totalSupply) : "n/a"
-
     // ZORA NFT DROPS Mint Call
 
     const editionSalePriceConverted = Number(editionSalesInfo.publicSalePrice)
     const editionTotalMintPrice = String(mintQuantity.queryValue * editionSalePriceConverted)
-    // const editionMintValue = BigNumber.from(ethers.utils.parseEther(editionTotalMintPrice)).toString()
     const totalMintValueEth = ethers.utils.formatUnits(editionTotalMintPrice)
 
     const { 
@@ -209,14 +189,6 @@ const EditionCard = ({ editionAddress }) => {
         []
     )
 
-    // console.log("whats getting fed in: ", editionSalesInfo.publicSalePrice)
-    // const whatIsThis = editionSalesInfo ? ethers.utils.formatEther(editionSalesInfo.publicSalePrice) : ""
-    // // console.log("mintquanity bvalue: ", mintQuantity.queryValue)
-    // // console.log("editionSalePriceConvereted: ", editionSalePriceConverted)
-    // // console.log("editionSalePriceConvereted: ", editionSalePriceConverted)
-    // console.log("what is this: ", whatIsThis);
-
-
     return (
         <>
             {
@@ -236,12 +208,6 @@ const EditionCard = ({ editionAddress }) => {
                                     height={350}                                                        
                                 />                            
                             </div>
-                            {/* <audio
-                                className=" mt-5  flex flex-row w-full mx-[20%] justify-center"
-                                controls
-                                src={editionsAnimationSRC}
-                            >
-                            </audio> */}
                             <CustomAudioPlayer
                                 musicSRC={editionsAnimationSRC}
                             />

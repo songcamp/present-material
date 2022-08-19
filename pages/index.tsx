@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useAccount, useContractRead } from 'wagmi'
 import { Header } from '../components/Header'
-import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 import EditionCard from '../components/EditionCard';
 import Image from 'next/image'

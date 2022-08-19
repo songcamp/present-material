@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
-import * as presentMaterialsCurator from "../contractABI/presentMaterialsCurator.json"
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 import { GetSpecificCurator } from '../components/GetSpecificCurator'
 import { BigNumber } from 'ethers'
