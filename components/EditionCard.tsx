@@ -203,7 +203,7 @@ const EditionCard = ({ editionAddress }) => {
                             <div className=" flex flex-row w-[100%] justify-center">
                                 <Image 
                                     src={editionsImageSRC}
-                                    // layout={"fill"}
+                                    // layout={"fill"
                                     width={350}
                                     height={350}                                                        
                                 />                            
