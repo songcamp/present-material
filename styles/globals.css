@@ -26,6 +26,10 @@ a {
   outline: none !important;
   box-shadow: none !important;
   color: #00C2FF !important;
+  width: 350px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .rhap_main-controls-button svg {
