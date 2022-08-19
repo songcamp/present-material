@@ -199,7 +199,7 @@ const EditionCard = ({ editionAddress }) => {
                         loading . . .
                         </div>   
                         ) : (
-                        <div  className="mx-2  border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-fit text-white flex flex-row flex-wrap justify-center ">
+                        <div  className="mx-8 sm:mx-2  border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-fit text-white flex flex-row flex-wrap justify-center ">
                             <div className=" flex flex-row w-[100%] justify-center">
                                 <Image 
                                     src={editionsImageSRC}
