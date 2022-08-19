@@ -6,7 +6,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 export const Header = () => {
 
   return (
-    <div className="bg-[#0E0411] text-[#00c2ff] flex flex-row w-full justify-center border-b-[1px] border-solid border-[#00c2ff] ">
+    <div className="text-lg bg-[#0E0411] text-[#00c2ff] flex flex-row w-full justify-center border-b-[1px] border-solid border-[#00c2ff] ">
       <div className="z-10 mr-4  sm:top-0 items-center h-fit  justify-between flex flex-row  w-full ">
         <div
             className="ml-5 flex-flex-row items-center"
