@@ -33,7 +33,7 @@ const client = createClient({
 
 const EditionCard = ({ editionAddress }) => {
 
-    const [mintQuantity, setMintQuantity] = useState({ name: 'Quantity', queryValue: 0 })
+    const [mintQuantity, setMintQuantity] = useState({ name: '1', queryValue: 1 })
     const [loading, setLoading] = useState(false)
 
     const [editionReturns, setEditonReturns] = useState(null)
@@ -155,11 +155,17 @@ const EditionCard = ({ editionAddress }) => {
     }
 
 
+
+    // VARIABLES
+
+    const tokensRemaining = editionSalesInfo && totalSupply ? Number(editionSalesInfo.maxSupply) -  Number(totalSupply) : "n/a"
+
     // ZORA NFT DROPS Mint Call
 
     const editionSalePriceConverted = Number(editionSalesInfo.publicSalePrice)
     const editionTotalMintPrice = String(mintQuantity.queryValue * editionSalePriceConverted)
-    const editionMintValue = BigNumber.from(ethers.utils.parseEther(editionTotalMintPrice)).toString()
+    // const editionMintValue = BigNumber.from(ethers.utils.parseEther(editionTotalMintPrice)).toString()
+    const totalMintValueEth = ethers.utils.formatUnits(editionTotalMintPrice)
 
     const { 
         data: mintData, 
@@ -177,7 +183,7 @@ const EditionCard = ({ editionAddress }) => {
             mintQuantity.queryValue
         ],
         overrides: {
-            value: editionMintValue
+            value: editionTotalMintPrice
         },
         onError(error, variables, context) {
             console.log("error", error)
@@ -203,6 +209,14 @@ const EditionCard = ({ editionAddress }) => {
         []
     )
 
+    // console.log("whats getting fed in: ", editionSalesInfo.publicSalePrice)
+    // const whatIsThis = editionSalesInfo ? ethers.utils.formatEther(editionSalesInfo.publicSalePrice) : ""
+    // // console.log("mintquanity bvalue: ", mintQuantity.queryValue)
+    // // console.log("editionSalePriceConvereted: ", editionSalePriceConverted)
+    // // console.log("editionSalePriceConvereted: ", editionSalePriceConverted)
+    // console.log("what is this: ", whatIsThis);
+
+
     return (
         <>
             {
@@ -213,13 +227,13 @@ const EditionCard = ({ editionAddress }) => {
                         loading . . .
                         </div>   
                         ) : (
-                        <div  className="border-[1px] border-[#00C2FF]  h-[100%] w-[100%] text-white flex flex-row flex-wrap justify-center ">
-                            <div className="relative flex flex-row w-[100%">
+                        <div  className="mx-2  border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-fit text-white flex flex-row flex-wrap justify-center ">
+                            <div className=" flex flex-row w-[100%] justify-center">
                                 <Image 
                                     src={editionsImageSRC}
                                     // layout={"fill"}
-                                    width={400}
-                                    height={400}                                                        
+                                    width={350}
+                                    height={350}                                                        
                                 />                            
                             </div>
                             {/* <audio
@@ -231,14 +245,41 @@ const EditionCard = ({ editionAddress }) => {
                             <CustomAudioPlayer
                                 musicSRC={editionsAnimationSRC}
                             />
-                            <div className="mt-4 w-full flex flex-row justify-center">
-                                <MintQuantityV2 mintQuantityCB={setMintQuantity} colorScheme={vibes}/>
+                            <div className=" flex flex-row flex-wrap w-full pb-4 space-y-2 ">
+                                <div
+                                    className="ml-3 flex flex-row w-full text-2xl "
+                                >
+                                    {"TRACK" + " - " + editionSalesInfo.name}
+                                </div>
+                                <div
+                                    className="ml-3 flex flex-row w-full font-bold text-xl "                                
+                                >
+                                    {"ARTIST" + " - " + shortenAddress(editionSalesInfo.creator)}
+                                </div>
+                            </div>
+                            <div className="flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
+                                <div
+                                    className="ml-8 flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
+                                >
+                                    {"$" + editionSalesInfo.symbol}
+                                </div>
+                                <div className="flex flex-row ml-5  items-center justify-center text-xl ">
+                                    {(tokensRemaining) + " / " + editionSalesInfo.maxSupply + " REMAINING"}
+                                </div>                                
+                            </div>                                                              
+                            <div className="w-full grid grid-cols-4 ">
+                                <MintQuantityV2 mintQuantityCB={setMintQuantity} colorScheme={vibes}/>                              
+                                <div 
+                                    className="flex flex-row justify-center col-start-2 col-end-3  text-lg  p-3  w-full h-full border-[1px] border-solid border-[#00C2FF]"
+                                >
+                                    {"" + totalMintValueEth + "Ξ"}
+                                </div>                                  
                                 <button 
-                                className="flex flex-row justify-self-start  text-2xl  p-3  w-fit h-fit border-2 border-solid border-white hover:bg-white hover:text-black"
-                                onClick={() => mintWrite()}   
+                                    className="flex flex-row justify-center col-start-3 col-end-5  text-2xl p-3  w-full h-full border-[1px] border-solid border-[#00C2FF] hover:bg-[#7DE0FF] hover:text-black bg-[#00C2FF] text-black"
+                                    onClick={() => mintWrite()}   
                                 >
                                 Mint
-                                </button>
+                                </button>                                
                             </div>     
                             <PostMintDialog 
                                 publicTxnLoadingStatus={mintWaitLoading}
@@ -258,22 +299,9 @@ const EditionCard = ({ editionAddress }) => {
                                     </div>
                                 </div>
                                 ) : (                  
-                                <div className="flex flex-col flex-wrap justify-center h-0">
-                                </div>
-                            )}                                                            
-                            <div
-                                className="mt-5 flex flex-row h-fit flex-wrap w-full justify-center"
-                            >
-                                <div className="flex flex-row w-full justify-center ">
-                                    {"Track : " + editionSalesInfo.name + " ($" + editionSalesInfo.symbol + ")"}
-                                </div>
-                                <div className="flex flex-row w-full justify-center">
-                                    {"Artist : " + shortenAddress(editionSalesInfo.creator)}
-                                </div>
-                                <div className="flex flex-row w-full justify-center">
-                                    {totalSupply + " | " + editionSalesInfo.maxSupply + " Minted"}
-                                </div>
-                            </div>                          
+                                <>
+                                </>
+                            )}                                                                                    
                         </div>                                                                          
                         )}
                     </>                           
