@@ -75,7 +75,6 @@ const Curate: NextPage = () => {
             console.log("error: ", tokeGateAddressError)
         },
         onSuccess(tokeGateAddressData) {
-            setTokenGateAddress(tokeGateAddressData)
             // console.log("tokenGateAddressCheck--> ", tokeGateAddressData)
         }  
     })  
