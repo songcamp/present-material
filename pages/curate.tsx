@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
@@ -18,9 +18,14 @@ const Curate: NextPage = () => {
         collectionAddress: ""
     })
 
+    const [userAddress, setUserAddress] = useState("");
     const { address: account } = useAccount({}); 
-    const currentUserAddress = account ? account : ""
-    console.log("currentUseraddress: ", currentUserAddress)
+
+    const getCurrentUserAddress = () => {
+        const currentUserAddress = account ? account : ""
+        setUserAddress(currentUserAddress)
+        console.log("currentUseraddress: ", currentUserAddress)
+    }
 
     // Query array of all active curators
     const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
@@ -45,7 +50,7 @@ const Curate: NextPage = () => {
         functionName: 'viewUserBalanceOfTokenGate',
         watch: true,
         args: [
-            currentUserAddress
+            userAddress
         ],
         onError(tokenGateError) {
             console.log("error: ", tokenGateError)
@@ -87,7 +92,7 @@ const Curate: NextPage = () => {
         functionName: 'addCurator',
         args: [
             collection.collectionAddress,
-            currentUserAddress,
+            userAddress,
         ]
     })    
 
@@ -104,7 +109,7 @@ const Curate: NextPage = () => {
         functionName: 'removeCurator',
         args: [
             collection.collectionAddress,
-            currentUserAddress,
+            userAddress,
         ]
     })        
 
@@ -127,6 +132,12 @@ const Curate: NextPage = () => {
             )
         }
     }
+
+    // Update state of userAddress whenever wallet changes
+    useEffect(() => {
+        getCurrentUserAddress(),
+        [account]
+    })
 
 
     return (

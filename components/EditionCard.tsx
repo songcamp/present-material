@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useContractWrite, useContractRead, useWaitForTransaction } from "wagmi"
+import { useContractWrite, useContractRead, useWaitForTransaction, useEnsName } from "wagmi"
 import { BigNumber } from "ethers"
 import { useState, useEffect } from 'react'
 import { createClient } from "urql"
@@ -8,6 +8,7 @@ import { ethers } from 'ethers'
 import MintQuantityV2 from './MintQuantityV2'
 import PostMintDialog from './PostMintDialog'
 import { CustomAudioPlayer } from './CustomAudioPlayer'
+import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 
 const vibes = "#ffffff"
 
@@ -181,7 +182,17 @@ const EditionCard = ({ editionAddress }) => {
             console.log("txn hash: ", mintWaitData.transactionHash)
         }
     })           
-        
+
+    // ENS resolution of artist names    
+    const { data: ensData, isError: ensError, isLoading: ensLoading, isSuccess: ensSuccess, isFetching: ensIsFetching, refetch } = useEnsName({
+        address: editionSalesInfo.creator,
+        enabled: false,
+        suspense: true
+    })        
+
+    const ensToRender = ensData && ensData != undefined 
+        ? ensData 
+        : shortenAddress(editionSalesInfo.creator)    
 
     useEffect(() => {
         fetchData();
@@ -200,7 +211,7 @@ const EditionCard = ({ editionAddress }) => {
                         </div>   
                         ) : (
                         <div  className="mx-8 sm:mx-2  border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-fit text-white flex flex-row flex-wrap justify-center ">
-                            <div className=" flex flex-row w-[100%] justify-center">
+                            <div className=" flex flex-row w-[100%] justify-center border-b-[1px] border-[#00C2FF]">
                                 <Image 
                                     src={editionsImageSRC}
                                     // layout={"fill"
@@ -220,7 +231,7 @@ const EditionCard = ({ editionAddress }) => {
                                 <div
                                     className="ml-3 flex flex-row w-full font-bold text-xl "                                
                                 >
-                                    {"ARTIST" + " - " + shortenAddress(editionSalesInfo.creator)}
+                                    {"ARTIST" + " - " + ensToRender}
                                 </div>
                             </div>
                             <div className="flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
