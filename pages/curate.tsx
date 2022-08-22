@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import Image from 'next/image'
 import Head from 'next/head'
 import { useState } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
@@ -129,24 +130,39 @@ const Curate: NextPage = () => {
 
 
     return (
-        <div className=' h-screen min-h-screen bg-[#0E0411] scrollbar-thin scrollbar-thumb-black scrollbar-track-gray-800'>
+        <div className=' h-screen  bg-[#0E0411] scrollbar-thin scrollbar-thumb-black scrollbar-track-gray-600'>
+            <Header/>            
             <Head>
                 <title>present materials</title>
                 <meta name="description" content="present materials" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header/>
-            <main className={` h-[100%] flex flex-row sm:flex-col flex-wrap text-[#00C2FF]`}>
-                <div className="z-1 bg-[url('/access_token_1.png')] bg-contain sm:bg-cover h-[50%] sm:h-full w-full sm:w-6/12 flex flex-row flex-wrap justify-center items-center">                
-                </div>
-                <div className="flex flex-col flex-wrap  sm:h-full  w-full sm:w-6/12  justify-start sm:justify-center items-center">
-                    <div className=" text-center  mb-5 sm:mb-2 text-4xl" >
-                    {"CURATION MANAGER"}
-                    </div>
-                    <div className=" text-center mb-5 sm:mb-20 text-lg" >
-                    {"If you own $PRESENT you can update the "}
+            <main className={`mt-[80px] h-[90%] flex flex-row sm:flex-col flex-wrap text-[#00C2FF]`}>
+                {/* <div className="z-1 h-full bg-[url('/graphics/access_token_final.jpg')] bg-contain sm:bg-cover w-full sm:w-7/12 flex flex-row flex-wrap justify-center items-center">                
+                </div> */}
+                <div className="relative z-1 h-[50%] sm:h-full  w-full sm:w-7/12 flex flex-row flex-wrap justify-center items-center">                
+                    <Image
+                        src={"/graphics/access_token_final.jpg"}
+                        layout={"fill"}
+                        />                
+                </div>                
+                <div className="z-1 flex flex-col flex-wrap  sm:h-full  w-full sm:w-5/12  justify-start sm:justify-center items-center">
+                    <Image
+                        src={"/Group.png"}
+                        width={181}
+                        height={73}
+                    />
+                    <div className=" text-xl mt-6 text-center mb-5 sm:mb-20 text-lg w-6/12" >
+                        {"If you own "} 
                         <a 
-                        className="underline hover:text-[#7DE0FF]"
+                        className="hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
+                        href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
+                        >
+                        $PRESENT
+                        </a>   
+                        {" you can update the "}
+                        <a 
+                        className="text-[#7DE0FF] hover:underline hover:text-[#7DE0FF]"
                         href="https://rinkeby.etherscan.io/address/0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39"
                         >
                         storefront
@@ -154,26 +170,19 @@ const Curate: NextPage = () => {
                     </div>
                     { tokenGateCheck > 0 ? (          
                     <div className="flex flex-row flex-wrap justify-center">          
-                        <div className="mb-2 flex flex-row w-full justify-center">
-                            <div className="mb-2 flex items-center  text-lg" >
-                            {"Do you own "}  
-                            <a
-                                className="ml-1 mr-1 underline hover:text-[#7DE0FF]"
-                                href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
-                            >
-                                {" $PRESENT "}    
-                            </a>
-                            {" -> "}
+                        <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
+                            <div className="font-[akzidenz] mb-2 flex items-center  text-xl" >
+                            {"Are you a manager? "}  
                             </div>
-                            <div className=" bg-[#00c2ff] text-black rounded mb-2  w-fit px-1  justify-self-center  ml-1 flex items-center">
-                                {"YES"}
+                            <div className=" text-xl ml-8 bg-[#00c2ff] text-black  mb-2  w-fit px-1  justify-self-center flex items-center">
+                                {"Yes"}
                             </div>
-                        </div>                
+                        </div>                                        
                         <input         
                             required
                             type="text"           
-                            className={`bg-[#1a0121] placeholder:text-[#005C77] border-[#00C2FF] border-2 border-solid pl-[1px] mb-4`}
-                            placeholder='Contract Address'
+                            className={`w-[60%] hover:border-[#7DE0FF] bg-[#1a0121] placeholder:text-[#1784A5] pl-1 hover:placeholder-text-[#7DE0FF] border-[#00C2FF] border-2 border-solid pl-[1px] mb-4`}
+                            placeholder='ZORA Edition Address: 0xa97d . . .'
                             value={collection.collectionAddress}
                             onChange={(e) => {
                                 e.preventDefault();
@@ -186,41 +195,64 @@ const Curate: NextPage = () => {
                             }}
                         >
                         </input>
-                        <div className="space-x-2 flex justify-center w-full">
+                        <div className=" flex justify-center w-full font-semibold">
                             <button 
-                                className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
+                                className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
                                 onClick={() => addCollectionWrite()}
                             >
                                 Add
                             </button>
                             <button 
-                                className="w-[100px] mb-2 border-2 border-solid border-[#00c2ff] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] hover:text-black"
+                                className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
                                 onClick={() => removeCollectionWrite()}
                             >
                                 Remove
                             </button>             
                         </div>
                     </div>
-                    ) : (
+                    ) : ( 
                         <div>          
                             <div className="mb-2 flex flex-row flex-wrap justify-center">
-                                <div className="flex flex-row w-full justify-center">
-                                    <div className="mb-2 flex items-center  text-lg" >
-                                    {"Do you own "}  
-                                        <a
-                                            className="ml-1 mr-1 underline hover:text-[#7DE0FF]"
-                                            href={"https://rinkeby.etherscan.io/address/0x7B9376f6d44B1EB17FFC3E176e0E33B66BAB9cFC" + tokeGateAddressCheck}
-                                        >
-                                            {" $PRESENT "}    
-                                        </a>
-                                    {" -> "}
+                                <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
+                                    <div className="  flex flex-row self-center flex items-center  text-xl" >
+                                    {"Are you a manager? "}  
                                     </div>
-                                    <div className=" bg-red-800 text-black rounded mb-2  w-fit px-1  justify-self-center  ml-1 flex items-center">
-                                        {"NO"}
+                                    <div className=" px-2 text-xl ml-8 bg-[#FF3D00] text-black    w-fit px-1  justify-self-center flex items-center">
+                                        {"No"}
                                     </div>
-                                </div>
-                                <div className="mt-5 mb-2 flex items-center text-center text-lg" >
-                                {"You do not have the ability to update the storefront"}
+                                </div> 
+                                <input   
+                                    disabled={true}      
+                                    required
+                                    type="text"           
+                                    className={`w-[60%] bg-[#1a0121] placeholder:text-gray-600 pl-1 border-gray-600 border-2 border-solid pl-[1px] mb-4`}
+                                    placeholder='ZORA Edition Address: 0xa97d . . .'
+                                    value={collection.collectionAddress}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        setCollection(current => {
+                                            return {
+                                                ...current,
+                                                collectionAddress: e.target.value
+                                            }
+                                        })
+                                    }}
+                                />
+                                <div className=" flex justify-center w-full font-semibold">
+                                    <button 
+                                        disabled={true}
+                                        className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-gray-600 text-black"
+                                        onClick={() => addCollectionWrite()}
+                                    >
+                                        Add
+                                    </button>
+                                    <button 
+                                        disabled={true}
+                                        className="w-[93px] h-[45px] m-0 p-[0p] border-2 border-solid border-black bg-gray-600 text-black"
+                                        onClick={() => removeCollectionWrite()}
+                                    >
+                                        Remove
+                                    </button>             
                                 </div>                                
                             </div>
                         </div>                

@@ -2,12 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "akzidenz";
+  src: local(''), url('../public/fonts/akzidenz_sv_font/Akzidenz-grotesk-roman.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal
+}
+
+@import url('https://rsms.me/inter/inter.css');
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: "Inter var", sans-serif
+  }
+}
+
+
 html,
 body {
   background-color: #0E0411;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   scrollbar-color: red yellow;
 }
@@ -15,6 +31,10 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer
 }
 
 * {

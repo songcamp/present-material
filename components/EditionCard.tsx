@@ -204,8 +204,8 @@ const EditionCard = ({ editionAddress }) => {
                                 <Image 
                                     src={editionsImageSRC}
                                     // layout={"fill"
-                                    width={350}
-                                    height={350}                                                        
+                                    width={354}
+                                    height={354}                                                        
                                 />                            
                             </div>
                             <CustomAudioPlayer

@@ -49,7 +49,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           accentColor: "#00c2ff",
           accentColorForeground: "#0E0411"
       })}>
-          <Component {...pageProps} />
+          <AppWrapper>
+            <Component {...pageProps} />
+          </AppWrapper>
       </RainbowKitProvider>
     </WagmiConfig>        
   )

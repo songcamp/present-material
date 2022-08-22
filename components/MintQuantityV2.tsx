@@ -19,7 +19,7 @@ export default function MintQuantityV2({ colorScheme, mintQuantityCB }) {
     }
 
     return (
-        <div className={`text-[#00C2FF]  z-10 flex col-start-1 col-end-2  w-full flex-row justify-self-end`}>
+        <div className={`text-[#00C2FF]  z-9 flex col-start-1 col-end-2  w-full flex-row justify-self-end`}>
             <Listbox value={mintQuantity} onChange={select}>
             <div className="w-full">
 
