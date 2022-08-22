@@ -79,9 +79,10 @@ const Curate: NextPage = () => {
         }  
     })  
 
-    const tokeGateAddressCheck = tokeGateAddressData ? tokeGateAddressData.toString() : ""  
-
-
+    // const setAddress = () => {
+    //     const await tokeGateAddressCheck = tokeGateAddressData ? tokeGateAddressData.toString() : "" 
+    //     setTokenGateAddress(tokeGateAddress); 
+    // }
 
     // add collection call
     const { 
@@ -190,7 +191,8 @@ const Curate: NextPage = () => {
                         {"If you own "} 
                         <a 
                         className="hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
-                        href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
+                        // href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
+                        href={"https://rinkeby.etherscan.io/address/0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"}
                         >
                         $PRESENT
                         </a>   

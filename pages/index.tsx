@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useAccount, useContractRead } from 'wagmi'
 import { Header } from '../components/Header'
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
+import * as presentMaterialsCuratorV3 from "../contractABI/presentMaterialCuratorV3.json"
 import EditionCard from '../components/EditionCard';
 import Image from 'next/image'
 
@@ -14,8 +15,8 @@ const Home: NextPage = () => {
 
   // CuratorContract Read Call --> query array of all active curators
   const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-    addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-    contractInterface: presentMaterialsCuratorV2.abi,
+    addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", 
+    contractInterface: presentMaterialsCuratorV3.abi,
     functionName: 'viewAllCollections',
     watch: true,
     onError(error) {
