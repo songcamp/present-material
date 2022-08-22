@@ -83,7 +83,7 @@ export const Header = () => {
 
           
           <div className="mx-5 w-full sm:w-7/12 text-[16px]">
-            {"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."}
+            {"Songcamp is a web3 laboratory experimenting at the edges of music and the new internet. ‘Songcamp: Present Material’ is a web3 record store, conceived and constructed in collaboration with Zora. We’ve worked together to provide a platform for Songcamp’s diverse array of artists to showcase their finished works, demos, ideas and works in progress. We hope to use the tools of web3 to zoom out from finished products and provide fans with a view on the process behind the songs."}
           </div>
         </div>    
         <div className="sm:mr-4 items-center h-fit space-x-3 justify-center sm:justify-between flex flex-row  w-full ">      

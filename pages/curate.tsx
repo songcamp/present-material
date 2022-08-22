@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
+import * as presentMaterialsCuratorV3 from "../contractABI/presentMaterialCuratorV3.json"
 import { GetSpecificCurator } from '../components/GetSpecificCurator'
 import { BigNumber } from 'ethers'
 
@@ -13,6 +14,8 @@ const clickables = "#7DE0FF"
 const background = "#0E0411"
 
 const Curate: NextPage = () => {
+
+    const [tokenGateAddress, setTokenGateAddress] = useState("")
 
     const [collection, setCollection] = useState({
         collectionAddress: ""
@@ -29,8 +32,8 @@ const Curate: NextPage = () => {
 
     // Query array of all active curators
     const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV2.abi,
+        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", 
+        contractInterface: presentMaterialsCuratorV3.abi,
         functionName: 'viewAllCollections',
         watch: true,
         onError(error) {
@@ -45,8 +48,8 @@ const Curate: NextPage = () => {
 
     // CuratorContract Read Call --> TokenGateBalanceCheck
     const { data: tokenGateData, isError: tokenGateError, isLoading: tokenGateLoading, isSuccess: tokenGateSuccess, isFetching: tokenGateFetching  } = useContractRead({
-        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV2.abi,
+        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", 
+        contractInterface: presentMaterialsCuratorV3.abi,
         functionName: 'viewUserBalanceOfTokenGate',
         watch: true,
         args: [
@@ -64,19 +67,21 @@ const Curate: NextPage = () => {
 
     // CuratorContract Read Call --> TokenGateAddress Check
     const { data: tokeGateAddressData, isError: tokeGateAddressError, isLoading: tokeGateAddressLoading, isSuccess: tokeGateAddressSuccess, isFetching: tokeGateAddressFetching  } = useContractRead({
-        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV2.abi,
-        functionName: 'tokenGateAddress',
+        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV3.abi,
+        functionName: 'viewTokenGateAddress',
         watch: true,
         onError(tokeGateAddressError) {
             console.log("error: ", tokeGateAddressError)
         },
         onSuccess(tokeGateAddressData) {
+            setTokenGateAddress(tokeGateAddressData)
             // console.log("tokenGateAddressCheck--> ", tokeGateAddressData)
         }  
     })  
 
-    const tokeGateAddressCheck = tokeGateAddressData ? tokeGateAddressData.toString() : ""    
+    const tokeGateAddressCheck = tokeGateAddressData ? tokeGateAddressData.toString() : ""  
+
 
 
     // add collection call
@@ -87,9 +92,9 @@ const Curate: NextPage = () => {
         write: addCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV2.abi,
-        functionName: 'addCurator',
+        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV3.abi,
+        functionName: 'addCollection',
         args: [
             collection.collectionAddress,
             userAddress,
@@ -104,34 +109,34 @@ const Curate: NextPage = () => {
         write: removeCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39", // PresentMaterialsCurator // https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV2.abi,
-        functionName: 'removeCurator',
+        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", // PresentMaterialsCurator // https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
+        contractInterface: presentMaterialsCuratorV3.abi,
+        functionName: 'removeCollection',
         args: [
             collection.collectionAddress,
             userAddress,
         ]
     })        
 
-    const showActiveCollections = () => {
-        if (collectionData.length === 0) {
-            return (
-                <div>
-                    No Active Collections
-                </div>
-            )
-        } else {
-            return (
-                collectionData.map((collection, index) => {
-                    return (
-                        <div key={collection} className="w-full">
-                            <GetSpecificCurator index={index} collectionToCheck={collection} />                             
-                        </div>
-                    )
-                })                
-            )
-        }
-    }
+    // const showActiveCollections = () => {
+    //     if (collectionData.length === 0) {
+    //         return (
+    //             <div>
+    //                 No Active Collections
+    //             </div>
+    //         )
+    //     } else {
+    //         return (
+    //             collectionData.map((collection, index) => {
+    //                 return (
+    //                     <div key={collection} className="w-full">
+    //                         <GetSpecificCurator index={index} collectionToCheck={collection} />                             
+    //                     </div>
+    //                 )
+    //             })                
+    //         )
+    //     }
+    // }
 
     // Update state of userAddress whenever wallet changes
     useEffect(() => {
@@ -193,7 +198,7 @@ const Curate: NextPage = () => {
                         {" you can update the "}
                         <a 
                         className="text-[#7DE0FF] hover:underline hover:text-[#7DE0FF]"
-                        href="https://rinkeby.etherscan.io/address/0x0D0A1da8Ef7882d0f2705bC936fE19462Ea99c39"
+                        href="https://rinkeby.etherscan.io/address/0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569"
                         >
                         storefront
                         </a>                    
