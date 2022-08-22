@@ -124,7 +124,7 @@ export const Header = () => {
             <ConnectButton 
               accountStatus="address" 
               showBalance={false}
-              label={"Connect wallet"}
+              label={"Connect"}
             />
           </div>
         </div>        
