@@ -1,10 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useAppContext from "../context/useAppContext";
-
-
-
 
 export const Header = () => {
 
@@ -18,7 +14,6 @@ export const Header = () => {
 <>
   {expandHeader == false ? (
     <div className="z-10 bg-[#0E0411] h-[80px] text-[16px] fixed top-0 py-4 font-[akzidenz] text-lg bg-[#0E0411] text-[#00c2ff] flex flex-row w-full justify-center border-b-[1px] border-solid border-[#00c2ff] ">
-
       <div className="sm:mr-4 items-center h-fit  justify-evenly sm:justify-between flex flex-row  w-full ">
         <div
             className="w-fit sm:w-full justify-end sm:justify-start sm:ml-4 flex flex-row items-center"
