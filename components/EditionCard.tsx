@@ -195,7 +195,7 @@ const EditionCard = ({ editionAddress }) => {
                 !!editionAddress ? (
                     <>
                         {loading ? (
-                        <div>
+                        <div className="text-[#00C2FF]">
                         loading . . .
                         </div>   
                         ) : (
