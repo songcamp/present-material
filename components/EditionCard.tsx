@@ -210,8 +210,8 @@ const EditionCard = ({ editionAddress }) => {
                         loading . . .
                         </div>   
                         ) : (
-                        <div  className="mx-8 sm:mx-2  border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-fit text-white flex flex-row flex-wrap justify-center ">
-                            <div className=" flex flex-row w-[100%] justify-center border-b-[1px] border-[#00C2FF]">
+                        <div  className="   border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-full text-white flex flex-row flex-wrap justify-center ">
+                            <div className=" flex flex-row sm:w-[100%] justify-center border-b-[1px] border-[#00C2FF]">
                                 <Image 
                                     src={editionsImageSRC}
                                     // layout={"fill"
@@ -234,14 +234,14 @@ const EditionCard = ({ editionAddress }) => {
                                     {"ARTIST" + " - " + ensToRender}
                                 </div>
                             </div>
-                            <div className="flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
+                            <div className=" justify-evenly flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
                                 <div
-                                    className="ml-8 flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
+                                    className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
                                 >
                                     {"$" + editionSalesInfo.symbol}
                                 </div>
-                                <div className="flex flex-row ml-5  items-center justify-center text-xl ">
-                                    {(tokensRemaining) + " / " + editionSalesInfo.maxSupply + " REMAINING"}
+                                <div className="flex flex-row  items-center justify-center text-xl ">
+                                    {(totalSupply) + " / " + editionSalesInfo.maxSupply + " MINTED"}
                                 </div>                                
                             </div>                                                              
                             <div className="w-full grid grid-cols-4 ">

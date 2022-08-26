@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
+import { Footer } from '../components/Footer'
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 import * as presentMaterialsCuratorV3 from "../contractABI/presentMaterialCuratorV3.json"
 import { GetSpecificCurator } from '../components/GetSpecificCurator'
@@ -153,14 +154,18 @@ const Curate: NextPage = () => {
                 <meta name="description" content="present materials" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={`mt-[80px] h-[90%] flex flex-row sm:flex-col flex-wrap text-[#00C2FF]`}>
+            <main className={`border-t-2 border-b-2 border-solid border-[#00c2ff] mt-[80px] h-[90%] flex flex-row sm:flex-col flex-wrap text-[#00C2FF] text-[16px]`}>
                 {/* <div className="z-1 h-full bg-[url('/graphics/access_token_final.jpg')] bg-contain sm:bg-cover w-full sm:w-7/12 flex flex-row flex-wrap justify-center items-center">                
                 </div> */}
-                <div className="relative z-1 h-[50%] sm:h-full w-full sm:w-7/12 flex flex-row flex-wrap justify-center items-center">                
+                <div className="relative z-1 h-[50%] border-r-2 border-solid border-[#00c2ff] sm:h-full w-full w-7/12 flex flex-row flex-wrap justify-center items-center">                
+                    <div className="w-full flex flex-row">
+
+
                     <Image
                         src={"/graphics/access_token_final.jpg"}
-                        layout={"fill"}
+                        layout={"fill"}                                                
                     />                
+                                        </div>
                 </div>                
                 <div className="mt-4 sm:mt-0 z-1 flex flex-col flex-wrap  sm:h-full  w-full sm:w-5/12  justify-start sm:justify-center items-center">
                     {/* <Image
@@ -187,10 +192,10 @@ const Curate: NextPage = () => {
                     <path d="M124.43 72.3259V40.0909H139.564V45.5941H128.599V52.8033H138.202V58.1689H128.599V66.864H139.647V72.3259H124.43Z" fill="#00C2FF"/>
                     <path d="M141.903 72.3259V40.0909H151.341C153.322 40.0909 154.918 40.9164 156.129 42.5673C157.339 44.2183 157.958 46.392 157.958 49.0611C157.958 53.1747 156.706 55.775 154.189 56.8619V56.9995C155.166 57.4535 155.908 58.1689 156.39 59.1457C156.885 60.1225 157.188 61.5809 157.326 63.4933C157.367 64.2087 157.408 65.0617 157.449 66.0385C157.491 67.0153 157.532 67.7858 157.559 68.3636C157.587 68.9414 157.628 69.5055 157.67 70.0833C157.725 70.6474 157.78 71.1014 157.876 71.4179C157.958 71.7343 158.068 71.9407 158.206 72.0232V72.3397H154.202C154.12 72.2846 154.065 72.1746 153.996 71.9957C153.941 71.8306 153.886 71.5967 153.859 71.294C153.817 70.9914 153.79 70.6887 153.762 70.3723C153.735 70.0558 153.707 69.6431 153.68 69.1616C153.652 68.6663 153.625 68.226 153.611 67.8545C153.597 67.4831 153.57 66.9878 153.542 66.3687C153.515 65.7496 153.487 65.268 153.473 64.9103C153.308 61.2369 151.96 59.4071 149.442 59.4071H146.072V72.3534H141.903V72.3259ZM146.072 45.3602V54.3304H150.502C151.588 54.3304 152.441 53.9314 153.019 53.1197C153.597 52.308 153.9 51.2349 153.9 49.9141C153.9 48.5933 153.625 47.4652 153.061 46.6259C152.496 45.7867 151.685 45.3602 150.612 45.3602H146.072Z" fill="#00C2FF"/>
                     </svg>                    
-                    <div className=" text-xl mt-6 text-center mb-5 sm:mb-20 text-lg w-8/12 sm:w-6/12" >
+                    <div className=" text-[16px] mt-6 text-center mb-5 sm:mb-20  w-8/12 sm:w-6/12" >
                         {"If you own "} 
                         <a 
-                        className="hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
+                        className="hover:underline  text-[#7DE0FF] hover:text-[#7DE0FF]"
                         // href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
                         href={"https://rinkeby.etherscan.io/address/0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"}
                         >
@@ -207,10 +212,10 @@ const Curate: NextPage = () => {
                     { tokenGateCheck > 0 ? (          
                     <div className="flex flex-row flex-wrap justify-center">          
                         <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
-                            <div className="font-[akzidenz] mb-2 flex items-center  text-xl" >
+                            <div className="font-[akzidenz] mb-2 flex items-center  text-[16px]" >
                             {"Are you a manager? "}  
                             </div>
-                            <div className=" text-xl ml-8 bg-[#00c2ff] text-black  mb-2  w-fit px-1  justify-self-center flex items-center">
+                            <div className=" text-[16px] font-font-semibold ml-8 bg-[#00c2ff] text-black  mb-2  w-fit px-1  justify-self-center flex items-center">
                                 {"Yes"}
                             </div>
                         </div>                                        
@@ -231,9 +236,9 @@ const Curate: NextPage = () => {
                             }}
                         >
                         </input>
-                        <div className=" flex justify-center w-full font-semibold">
+                        <div className=" flex justify-center w-full font-semibold text-[16px]">
                             <button 
-                                className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
+                                className="w-[93px] h-[45px]  mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
                                 onClick={() => addCollectionWrite()}
                             >
                                 Add
@@ -250,18 +255,23 @@ const Curate: NextPage = () => {
                         <div>          
                             <div className="mb-2 flex flex-row flex-wrap justify-center">
                                 <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
-                                    <div className="  flex flex-row self-center flex items-center  text-xl" >
-                                    {"Are you a manager? "}  
-                                    </div>
-                                    <div className=" px-2 text-xl ml-8 bg-[#FF3D00] text-black    w-fit px-1  justify-self-center flex items-center">
-                                        {"No"}
+                                    <div className=" text-[16px] mt-6 text-center text-lg w-8/12 sm:w-9/12" >
+                                        {"This wallet does not own "} 
+                                        <a 
+                                        className="hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
+                                        // href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
+                                        href={"https://rinkeby.etherscan.io/address/0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"}
+                                        >
+                                        $PRESENT
+                                        </a>   
+                                        {". Log-in with a different wallet to access functionality "}               
                                     </div>
                                 </div> 
                                 <input   
                                     disabled={true}      
                                     required
                                     type="text"           
-                                    className={`w-[60%] bg-[#1a0121] placeholder:text-gray-600 pl-1 border-gray-600 border-2 border-solid pl-[1px] mb-4`}
+                                    className={`w-[60%] bg-[#1a0121] placeholder:text-[#00C2FF] pl-1 border-[#00C2FF] opacity-25 border-2 border-solid pl-[1px] mb-4`}
                                     placeholder='ZORA Edition Address: 0xa97d . . .'
                                     value={collection.collectionAddress}
                                     onChange={(e) => {
@@ -274,17 +284,17 @@ const Curate: NextPage = () => {
                                         })
                                     }}
                                 />
-                                <div className=" flex justify-center w-full font-semibold">
+                                <div className=" flex justify-center w-full font-semibold text-[16px]">
                                     <button 
                                         disabled={true}
-                                        className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-gray-600 text-black"
+                                        className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-[#00C2FF] opacity-25 text-black"
                                         onClick={() => addCollectionWrite()}
                                     >
                                         Add
                                     </button>
                                     <button 
                                         disabled={true}
-                                        className="w-[93px] h-[45px] m-0 p-[0p] border-2 border-solid border-black bg-gray-600 text-black"
+                                        className="w-[93px] h-[45px] m-0 p-[0p] border-2 border-solid border-black bg-[#00C2FF] opacity-25 text-black"
                                         onClick={() => removeCollectionWrite()}
                                     >
                                         Remove
@@ -295,6 +305,7 @@ const Curate: NextPage = () => {
                     )}
                 </div>
             </main>
+            <Footer />
         </div>
     )
 }

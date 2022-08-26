@@ -82,7 +82,7 @@ export default function MintQuantityV2({ colorScheme, mintQuantityCB }) {
                                 </span>
                                 {selected ? (
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    {/* <CheckIcon className="h-5 w-5" aria-hidden="true" /> */}
                                 </span>
                                 ) : null}
                             </>
@@ -113,7 +113,7 @@ export default function MintQuantityV2({ colorScheme, mintQuantityCB }) {
                                 </span>
                                 {selected ? (
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    {/* <CheckIcon className="h-5 w-5" aria-hidden="true" /> */}
                                 </span>
                                 ) : null}
                             </>
