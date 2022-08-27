@@ -160,7 +160,7 @@ const Curate: NextPage = () => {
                         // objectPosition={"top"}                                                  
                     />                
                 </div>                
-                <div className="mt-4 sm:mt-0 z-1 flex flex-col flex-wrap  sm:h-full  w-full sm:w-5/12  justify-start sm:justify-center items-center">
+                <div className="mt-5 sm:mt-0 z-1 flex flex-col flex-wrap  sm:h-full  w-full sm:w-5/12  justify-start sm:justify-center items-center">
                     <svg width="183" height="73" viewBox="0 0 183 73" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.55027 33.5971C6.77115 33.5971 4.61115 32.6753 3.07025 30.818C1.52935 28.9607 0.731388 26.3329 0.662598 22.9071H4.74873C4.88631 24.8333 5.32656 26.2091 6.05574 27.062C6.79867 27.9013 7.89931 28.3278 9.38518 28.3278C10.5546 28.3278 11.5177 27.9838 12.2606 27.3097C13.0035 26.6356 13.3888 25.5899 13.3888 24.1729C13.3888 23.6638 13.3475 23.196 13.2649 22.7971C13.1824 22.3981 13.0035 22.0266 12.7284 21.7102C12.4532 21.3937 12.2331 21.1323 12.0405 20.9397C11.8479 20.7471 11.4902 20.5408 10.9811 20.3069C10.4583 20.0867 10.0731 19.9216 9.79792 19.8116C9.52275 19.7015 9.02747 19.5227 8.29829 19.2475C7.41778 18.9173 6.68861 18.6284 6.12453 18.3945C5.56045 18.1606 4.94134 17.7754 4.25344 17.2663C3.56554 16.7573 3.02898 16.1932 2.64375 15.5741C2.24477 14.955 1.91458 14.1433 1.65317 13.1389C1.37801 12.1346 1.25419 10.9789 1.25419 9.68568C1.24043 6.60389 1.95585 4.21 3.4142 2.54528C4.85879 0.880559 6.7574 0.0413208 9.12377 0.0413208C11.4902 0.0413208 13.3337 0.908075 14.737 2.65534C16.1404 4.40261 16.9108 6.87905 17.0621 10.0984H13.0586C12.9485 8.53001 12.522 7.33306 11.8066 6.49383C11.0912 5.65459 10.1831 5.22809 9.0825 5.22809C7.98186 5.22809 7.04631 5.57204 6.37217 6.25994C5.69803 6.94784 5.36784 7.86963 5.36784 9.01154C5.36784 10.2498 5.69803 11.144 6.35841 11.7219C7.0188 12.2997 8.18823 12.8638 9.85295 13.4416C10.8435 13.7718 11.669 14.0745 12.3019 14.3634C12.9347 14.6523 13.6226 15.0513 14.3656 15.5741C15.1085 16.0969 15.6863 16.6748 16.0853 17.3076C16.4843 17.9405 16.842 18.7797 17.1172 19.8116C17.3923 20.8434 17.5299 22.0404 17.5299 23.4024C17.5299 26.5943 16.787 29.0845 15.3149 30.8868C13.8428 32.6891 11.9029 33.5971 9.53651 33.5971H9.55027Z" fill="#00C2FF"/>
                     <path d="M18.1217 6.13614V0.632935H34.6588V6.13614H28.4677V32.868H24.299V6.13614H18.1079H18.1217Z" fill="#00C2FF"/>
@@ -229,7 +229,7 @@ const Curate: NextPage = () => {
 
                             { addWaitLoading == true ? (
                             <button 
-                                className="w-[93px] h-[45px]  mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
+                                className="w-[93px] h-[45px] border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
                                 disabled={true}
                             >
                                 <div className='flex flex-row justify-center flex-wrap'>
@@ -306,7 +306,7 @@ const Curate: NextPage = () => {
                                 <div className=" flex justify-center w-full font-semibold text-[16px]">
                                     <button 
                                         disabled={true}
-                                        className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-[#00C2FF] opacity-25 text-black"
+                                        className="w-[93px] h-[45px] border-2 border-solid border-black bg-[#00C2FF] opacity-25 text-black"
                                         onClick={() => addCollectionWrite()}
                                     >
                                         Add
