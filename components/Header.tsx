@@ -13,7 +13,7 @@ export const Header = () => {
   return (
 <>
   {expandHeader == false ? (
-    <div className="z-10 opacity-90 backdrop-blur-xl bg-white/40 h-[80px] text-[16px] fixed top-0 py-4 font-[akzidenz] text-lg text-[#00c2ff] flex flex-row w-full justify-center ">
+    <div className="z-10 opacity-[99%] backdrop-blur-3xl bg-white/30 h-[80px] text-[16px] fixed top-0 py-4 font-[akzidenz] text-lg text-[#00c2ff] flex flex-row w-full justify-center ">
       <div className="sm:mr-4 items-center h-fit space-x-3 justify-center sm:justify-between flex flex-row  w-full ">      
         <div
             className="w-fit sm:w-full justify-end sm:justify-start sm:ml-4 flex flex-row items-center"
@@ -58,7 +58,7 @@ export const Header = () => {
       </div>
 
       ) : (
-      <div className="z-10 opacity-90 backdrop-blur-2xl bg-white/40 text-[16px] top-0 h-fit fixed py-4 font-[akzidenz] text-lg bg-[#0E0411] text-[#00c2ff] flex flex-row w-full flex-wrap justify-center ">    
+      <div className="z-10 opacity-[99%] backdrop-blur-3xl bg-white/30 text-[16px] top-0 h-fit fixed py-4 font-[akzidenz] text-lg bg-[#0E0411] text-[#00c2ff] flex flex-row w-full flex-wrap justify-center ">    
         
         <div className="flex flex-row justify-end flex-wrap w-full h-fit mt-2 mb-2 mr-5 ">
           <button

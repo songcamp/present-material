@@ -7,7 +7,7 @@ import { useRef } from "react";
 export const CustomAudioPlayer = (musicSRC) => {
 
     return (
-        <div className="w-[350px] flex flex-row justify-center">
+        <div className="w-full flex flex-row justify-center">
             <AudioPlayer        
                 volume={0.5}
                 autoPlay={false}

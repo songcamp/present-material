@@ -268,7 +268,7 @@ const EditionCard = ({ editionAddress }) => {
                                         </div>
                                     </div>                                                          
                                     ) : (
-                                    <div className="h ">
+                                    <div className="w-full ">
                                         <CustomAudioPlayer
                                             musicSRC={editionsAnimationSRC}
                                         />
