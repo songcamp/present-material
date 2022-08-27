@@ -200,7 +200,7 @@ const Curate: NextPage = () => {
                     { tokenGateCheck > 0 ? (          
                     <div className="flex flex-row flex-wrap justify-center">          
                         <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
-                            <div className="font-[akzidenz] mb-2 flex items-center  text-[16px]" >
+                            <div className=" mb-2 flex items-center  text-[16px]" >
                             {"Are you a manager? "}  
                             </div>
                             <div className=" text-[16px] font-font-semibold ml-8 bg-[#00c2ff] text-black  mb-2  w-fit px-1  justify-self-center flex items-center">
@@ -273,18 +273,17 @@ const Curate: NextPage = () => {
                     </div>
                     ) : ( 
                         <div>          
-                            <div className="mb-2 flex flex-row flex-wrap justify-center">
+                            <div className=" flex flex-row flex-wrap justify-center">
                                 <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
-                                    <div className=" text-[16px] mt-6 text-center text-lg w-8/12 sm:w-9/12" >
-                                        {"This wallet does not own "} 
+                                    <div className=" mb-2 flex items-center text-[16px]" >
+                                        {"Current wallet does not own "} 
                                         <a 
-                                        className="hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
+                                        className="pl-1 hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
                                         // href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
                                         href={"https://rinkeby.etherscan.io/address/0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"}
                                         >
                                         $PRESENT
                                         </a>   
-                                        {". Log-in with a different wallet to access functionality "}               
                                     </div>
                                 </div> 
                                 <input   
