@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import { useAccount, useContractRead, useContractWrite } from 'wagmi'
+import { useAccount, useContractRead, useContractWrite, useWaitForTransaction} from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
@@ -85,7 +85,7 @@ const Curate: NextPage = () => {
     //     setTokenGateAddress(tokeGateAddress); 
     // }
 
-    // add collection call
+    // add listing call
     const { 
         data: addCollectionData, 
         isError: addCollectionError, 
@@ -101,6 +101,15 @@ const Curate: NextPage = () => {
             userAddress,
         ]
     })    
+
+    // Wait for data from add listing call
+    const { data: addWaitData, isError: addWaitError, isLoading: addWaitLoading } = useWaitForTransaction({
+        hash:  addCollectionData?.hash,
+        onSuccess(addWaitData) {
+            console.log("txn complete: ", addWaitData)
+            console.log("txn hash: ", addWaitData.transactionHash)
+        }
+    })          
 
     // remove collection call
     const { 
@@ -119,32 +128,20 @@ const Curate: NextPage = () => {
         ]
     })        
 
-    // const showActiveCollections = () => {
-    //     if (collectionData.length === 0) {
-    //         return (
-    //             <div>
-    //                 No Active Collections
-    //             </div>
-    //         )
-    //     } else {
-    //         return (
-    //             collectionData.map((collection, index) => {
-    //                 return (
-    //                     <div key={collection} className="w-full">
-    //                         <GetSpecificCurator index={index} collectionToCheck={collection} />                             
-    //                     </div>
-    //                 )
-    //             })                
-    //         )
-    //     }
-    // }
+    // Wait for data from remove listing call
+    const { data: removeWaitData, isError: removeWaitError, isLoading: removeWaitLoading } = useWaitForTransaction({
+        hash:  removeCollectionData?.hash,
+        onSuccess(removeWaitData) {
+            console.log("txn complete: ", removeWaitData)
+            console.log("txn hash: ", removeWaitData.transactionHash)
+        }
+    })            
 
     // Update state of userAddress whenever wallet changes
     useEffect(() => {
         getCurrentUserAddress(),
         [account]
     })
-
 
     return (
         <div className=' h-screen  bg-[#0E0411] scrollbar-thin scrollbar-thumb-black scrollbar-track-gray-600'>
@@ -237,18 +234,50 @@ const Curate: NextPage = () => {
                         >
                         </input>
                         <div className=" flex justify-center w-full font-semibold text-[16px]">
+
+
+                            { addWaitLoading == true ? (
                             <button 
+                                className="w-[93px] h-[45px]  mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
+                                disabled={true}
+                            >
+                                <div className='flex flex-row justify-center flex-wrap'>
+                                    <img
+                                    className=" rounded-full p-1 " 
+                                    width="25px"
+                                    src="/SVG-Loaders-master/svg-loaders/tail-spin.svg"
+                                    />
+                                </div>
+                            </button>
+                            ) : (
+                                <button 
                                 className="w-[93px] h-[45px]  mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
                                 onClick={() => addCollectionWrite()}
                             >
                                 Add
                             </button>
+                            )}
+                            { removeWaitLoading == true ? (
                             <button 
-                                className="w-[93px] h-[45px] mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
+                                className="w-[93px] h-[45px]  mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
+                                disabled={true}
+                            >
+                                <div className='flex flex-row justify-center flex-wrap'>
+                                    <img
+                                    className=" rounded-full p-1" 
+                                    width="25px"
+                                    src="/SVG-Loaders-master/svg-loaders/tail-spin.svg"
+                                    />
+                                </div>
+                            </button>
+                            ) : (
+                                <button 
+                                className="w-[93px] h-[45px]  mb-2 border-2 border-solid border-black bg-[#00C2FF] hover:bg-[#7DE0FF] hover:border-[#7DE0FF] text-black"
                                 onClick={() => removeCollectionWrite()}
                             >
                                 Remove
-                            </button>             
+                            </button>
+                            )}                           
                         </div>
                     </div>
                     ) : ( 

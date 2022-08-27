@@ -37,6 +37,7 @@ const EditionCard = ({ editionAddress }) => {
         "publicSaleStart": "",
         "publicSaleEnd": ""
     })
+    const [mintOverlayState, setMintOverlayState] = useState(false);
 
     // Query array of all active curators
     const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
@@ -154,6 +155,7 @@ const EditionCard = ({ editionAddress }) => {
         isLoading: mintLoading, 
         isSuccess: mintSuccess, 
         status: mintStatus, 
+        error,
         write: mintWrite
         } = useContractWrite({
         mode: 'recklesslyUnprepared',
@@ -167,12 +169,22 @@ const EditionCard = ({ editionAddress }) => {
             value: editionTotalMintPrice
         },
         onError(error, variables, context) {
-            console.log("error", error)
+            console.log("error", JSON.stringify(error.message))
         },
         onSuccess(cancelData, variables, context) {
             console.log("Success!", cancelData)
         },
     })
+
+    // handle loading state UI when minting
+    const mintAndSetOverlayState = () => {
+        mintWrite()
+        setMintOverlayState(!mintOverlayState)
+    }
+
+    const clearLoadingState = () => {
+        setMintOverlayState(!mintOverlayState);
+    }    
 
     // Wait for data from mint call
     const { data: mintWaitData, isError: mintWaitError, isLoading: mintWaitLoading } = useWaitForTransaction({
@@ -219,66 +231,116 @@ const EditionCard = ({ editionAddress }) => {
                                     height={354}                                                        
                                 />                            
                             </div>
-                            <CustomAudioPlayer
-                                musicSRC={editionsAnimationSRC}
-                            />
-                            <div className=" flex flex-row flex-wrap w-full pb-4 space-y-2 ">
-                                <div
-                                    className="ml-3 flex flex-row w-full text-2xl "
-                                >
-                                    {"TRACK" + " - " + editionSalesInfo.name}
-                                </div>
-                                <div
-                                    className="ml-3 flex flex-row w-full font-bold text-xl "                                
-                                >
-                                    {"ARTIST" + " - " + ensToRender}
+                            { mintWaitLoading == false && mintOverlayState == true && mintStatus == "success" ? (
+                            <div className=" h-[268px] bg-[#00C2FF] flex flex-row sm:w-[100%] justify-center items-center  ">
+                                <div className=" w-full  flex flex-row flex-wrap justify-center space-y-4">
+                                    <div className="text-lg font-bold  flex flex-row w-full h-fit justify-center text-[#0E0411]">
+                                        Mint Successful ☼☽
+                                    </div>
+                                    <a 
+                                        className="decoration-1 text-sm pb-2 h-fit justify-center underline flex flex-row w-full text-[#0E0411]"
+                                        href={"https://rinkeby.etherscan.io/tx/" + mintWaitData.transactionHash} 
+                                    >
+                                        View txn on Etherscan
+                                    </a>
+                                    <button
+                                        onClick={() => clearLoadingState()}
+                                        className=" h-fit text-[#00C2FF] border-[1px] border-[#0E0411] bg-[#0E0411] hover:bg-[#7DE0FF] hover:text-[#0E0411]  p-2 justify-center w-6/12 text-[16px] flex flex-row h-fit hover:text-[#7DE0FF]"
+                                    >
+                                        CLOSE
+                                    </button>
                                 </div>
                             </div>
-                            <div className=" justify-evenly flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
-                                <div
-                                    className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
-                                >
-                                    {"$" + editionSalesInfo.symbol}
-                                </div>
-                                <div className="flex flex-row  items-center justify-center text-xl ">
-                                    {(totalSupply) + " / " + editionSalesInfo.maxSupply + " MINTED"}
-                                </div>                                
-                            </div>                                                              
-                            <div className="w-full grid grid-cols-4 ">
-                                <MintQuantityV2 mintQuantityCB={setMintQuantity} colorScheme={vibes}/>                              
-                                <div 
-                                    className="flex flex-row justify-center col-start-2 col-end-3  text-lg  p-3  w-full h-full border-[1px] border-solid border-[#00C2FF]"
-                                >
-                                    {"" + totalMintValueEth + "Ξ"}
-                                </div>                                  
-                                <button 
-                                    className="flex flex-row justify-center col-start-3 col-end-5  text-2xl p-3  w-full h-full border-[1px] border-solid border-[#00C2FF] hover:bg-[#7DE0FF] hover:text-black bg-[#00C2FF] text-black"
-                                    onClick={() => mintWrite()}   
-                                >
-                                Mint
-                                </button>                                
-                            </div>     
-                            <PostMintDialog 
-                                publicTxnLoadingStatus={mintWaitLoading}
-                                publicTxnSuccessStatus={mintStatus}
-                                publicTxnHashLink={mintWaitData}
-                                colorScheme={vibes}
-                                editionAddress={editionAddress}                            
-                            />
-                            { mintWaitLoading == true ? (
-                                <div className="flex flex-col flex-wrap justify-center">           
-                                    <div className='flex flex-row justify-center flex-wrap'>
-                                        <img
-                                        className="bg-[#000] rounded-full p-1 mt-1" 
-                                        width="25px"
-                                        src="/SVG-Loaders-master/svg-loaders/tail-spin.svg"
-                                        />
-                                    </div>
-                                </div>
-                                ) : (                  
+                            ) : (
                                 <>
+                                    { mintWaitLoading == false && mintOverlayState == true && mintStatus == "error" ? (                                                                    
+                                    <div className="h-[268px] bg-[#00C2FF] flex flex-row w-full sm:w-[100%] justify-center items-center">
+                                        <div className="my-4 w-full h-fit flex flex-row flex-wrap justify-center  space-y-4">
+                                            <div className="text-lg font-bold  flex flex-row w-full h-fit justify-center text-[#0E0411]">
+                                                Error in mint process
+                                            </div>                           
+                                            <button
+                                                onClick={() => clearLoadingState()}
+                                                className=" h-fit text-[#00C2FF] border-[1px] border-[#0E0411] bg-[#0E0411] hover:bg-[#7DE0FF] hover:text-[#0E0411]  p-2 justify-center w-6/12 text-[16px] flex flex-row h-fit hover:text-[#7DE0FF]"
+                                            >
+                                                CLOSE
+                                            </button>
+                                        </div>
+                                    </div>                                                          
+                                    ) : (
+                                    <div className="h ">
+                                        <CustomAudioPlayer
+                                            musicSRC={editionsAnimationSRC}
+                                        />
+                                        <div className=" flex flex-row flex-wrap w-full pb-4 space-y-2 ">
+                                            <div
+                                                className="ml-3 flex flex-row w-full text-2xl "
+                                            >
+                                                {"TRACK -"}
+                                                <a
+                                                    className="pl-2 hover:underline decoration-1"
+                                                    href={"https://create.zora.co/editions/" + editionAddress}
+                                                >
+                                                    {editionSalesInfo.name}
+                                                </a>
+                                            </div>
+                                            <div
+                                                className="ml-3 flex flex-row w-full font-bold text-xl "                                
+                                            >
+                                                {"ARTIST - "}
+                                                <a
+                                                    className="pl-2 hover:underline decoration-1"
+                                                    href={"https://etherscan.io/address/" + editionSalesInfo.creator}                                        
+                                                >
+                                                    {ensToRender}
+                                                </a> 
+                                            </div>
+                                        </div>
+                                        <div className=" justify-evenly flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
+                                            <div
+                                                className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
+                                            >
+                                                {"$" + editionSalesInfo.symbol}
+                                            </div>
+                                            <div className="flex flex-row  items-center justify-center text-xl ">
+                                                {(totalSupply) + " / " + editionSalesInfo.maxSupply + " MINTED"}
+                                            </div>                                
+                                        </div>                                                              
+                                        <div className="w-full grid grid-cols-4 ">
+                                            <MintQuantityV2 mintQuantityCB={setMintQuantity} colorScheme={vibes}/>                              
+                                            <div 
+                                                className="flex flex-row justify-center col-start-2 col-end-3  text-lg  p-3  w-full h-full border-[1px] border-solid border-[#00C2FF]"
+                                            >
+                                                {"" + totalMintValueEth + "Ξ"}
+                                            </div>             
+
+                                            { mintWaitLoading == true ? (
+                                            <button 
+                                                disabled={true}
+                                                className="flex flex-row justify-center col-start-3 col-end-5  text-2xl p-3  w-full h-full border-[1px] border-solid border-[#00C2FF] hover:bg-[#7DE0FF] hover:text-black bg-[#00C2FF] text-black"
+                                                // onClick={() => mintWrite()}   
+                                            >
+                                                <div className='flex flex-row justify-center flex-wrap'>
+                                                    <img
+                                                    className=" rounded-full p-1 mt-2" 
+                                                    width="25px"
+                                                    src="/SVG-Loaders-master/svg-loaders/tail-spin.svg"
+                                                    />
+                                                </div>
+                                            </button>    
+                                            ) : (                                                  
+                                            <button 
+                                                className="flex flex-row justify-center col-start-3 col-end-5  text-2xl p-3  w-full h-full border-[1px] border-solid border-[#00C2FF] hover:bg-[#7DE0FF] hover:text-black bg-[#00C2FF] text-black"
+                                                onClick={() => mintAndSetOverlayState()}   
+                                            >
+                                                Mint
+                                            </button>                                                                   
+                                            )}              
+                                        </div>  
+                                    </div>                                   
+                                    )}
                                 </>
-                            )}                                                                                    
+                            )}
                         </div>                                                                          
                         )}
                     </>                           
