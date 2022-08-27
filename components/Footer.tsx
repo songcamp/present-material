@@ -35,24 +35,29 @@ export const Footer = () => {
 
          <div className=" sm:row-start-1 sm:row-end-1 pr-10 space-y-2 w-full flex flex-row flex-wrap justify-end">
             <div className="flex flex-row w-full justify-end">
-               <Link
-                  href={"/"}
-               >
-                  <a className="hover:text-[#7DE0FF]">
-                     Collect
+                  <a 
+                     href="https://songcamp.mirror.xyz/"
+                     className="hover:text-[#7DE0FF]"
+                  >
+                     Songcamp Mirror
                   </a>
-               </Link>
             </div>
-            
             <div className="flex flex-row w-full justify-end">
-               <Link
-                  href={"/collect"}
-               >
-                  <a className="hover:text-[#7DE0FF]">
-                     Curate
+                  <a 
+                     href="https://twitter.com/songcamp_"
+                     className="hover:text-[#7DE0FF]"
+                  >
+                     Songcamp Twitter
                   </a>
-               </Link>
-            </div>                       
+            </div>
+            <div className="flex flex-row w-full justify-end">
+                  <a 
+                     href="https://discord.com/invite/wHsJD2sTpc"
+                     className="hover:text-[#7DE0FF]"
+                  >
+                     Songcamp Discord
+                  </a>
+            </div>                                         
          </div>
       </div>      
    )
