@@ -1,5 +1,5 @@
 # Present Material - a web3 record store for the Songcamp community  
-#### Built with the [zora-starter-kit](https://github.com/0xTranqui/present-materials) ☼☽
+#### Built with the [zora-starter-kit](https://github.com/0xTranqui/zora-starter-kit) ☼☽
 ---
 ## Getting Started - How to Fork
 > Clone the repo
