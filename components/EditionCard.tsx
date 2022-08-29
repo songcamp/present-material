@@ -16,8 +16,7 @@ const ZORA_DROPS_RINKEBY = "https://api.thegraph.com/subgraphs/name/iainnash/erc
 const ZORA_DROPS_GOERLI = "https://api.thegraph.com/subgraphs/name/iainnash/erc721drop-goerli"
 
 const client = createClient({
-    // url: ZORA_DROPS_MAINNET
-    url: ZORA_DROPS_RINKEBY
+    url: ZORA_DROPS_MAINNET
 })
 
 const EditionCard = ({ editionAddress }) => {
@@ -204,6 +203,15 @@ const EditionCard = ({ editionAddress }) => {
         ? ensData 
         : shortenAddress(editionSalesInfo.creator)    
 
+    // max supply check
+    const maxSupplyCheck = (supply) => {
+        if (supply == 18446744073709551615) {
+            return "∞"
+        } else {
+            return supply
+        }
+    }
+
     useEffect(() => {
         fetchData();
         }, 
@@ -237,7 +245,7 @@ const EditionCard = ({ editionAddress }) => {
                                     </div>
                                     <a 
                                         className="decoration-1 text-sm pb-2 h-fit justify-center underline flex flex-row w-full text-[#0E0411]"
-                                        href={"https://rinkeby.etherscan.io/tx/" + mintWaitData.transactionHash} 
+                                        href={"https://etherscan.io/tx/" + mintWaitData.transactionHash} 
                                     >
                                         View txn on Etherscan
                                     </a>
@@ -272,9 +280,8 @@ const EditionCard = ({ editionAddress }) => {
                                         />
                                         <div className=" flex flex-row flex-wrap w-full pb-4 space-y-2 ">
                                             <div
-                                                className="ml-3 flex flex-row w-full text-2xl "
+                                                className="ml-3 flex flex-row w-full text-xl "
                                             >
-                                                {"TRACK -"}
                                                 <a
                                                     className="pl-2 hover:underline decoration-1"
                                                     href={"https://create.zora.co/editions/" + editionAddress}
@@ -301,7 +308,7 @@ const EditionCard = ({ editionAddress }) => {
                                                 {"$" + editionSalesInfo.symbol}
                                             </div>
                                             <div className="flex flex-row  items-center justify-center text-xl ">
-                                                {(totalSupply) + " / " + editionSalesInfo.maxSupply + " MINTED"}
+                                                {(totalSupply) + " / " + maxSupplyCheck(editionSalesInfo.maxSupply) + " MINTED"}
                                             </div>                                
                                         </div>                                                              
                                         <div className="w-full grid grid-cols-4 ">

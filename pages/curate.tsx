@@ -31,7 +31,7 @@ const Curate: NextPage = () => {
 
     // CuratorContract Read Call --> TokenGateAddress Check
     const { data: curationPassData, isError: curationPassError, isLoading: tokeGateAddressLoading, isSuccess: tokeGateAddressSuccess, isFetching: tokeGateAddressFetching  } = useContractRead({
-        addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E",
+        addressOrName: "0x6422Bf82Ab27F121a043d6DE88b55FA39e2ea292",
         contractInterface: CurationManager.abi,
         functionName: 'curationPass',
         watch: true,
@@ -73,7 +73,7 @@ const Curate: NextPage = () => {
         write: addCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E",
+        addressOrName: "0x6422Bf82Ab27F121a043d6DE88b55FA39e2ea292",
         contractInterface: CurationManager.abi,
         functionName: 'addListing',
         args: [
@@ -98,7 +98,7 @@ const Curate: NextPage = () => {
         write: removeCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E",
+        addressOrName: "0x6422Bf82Ab27F121a043d6DE88b55FA39e2ea292",
         contractInterface: CurationManager.abi,
         functionName: 'removeListing',
         args: [
@@ -179,15 +179,14 @@ const Curate: NextPage = () => {
                         {"If you own "} 
                         <a 
                         className="hover:underline  text-[#7DE0FF] hover:text-[#7DE0FF]"
-                        // href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
-                        href={"https://rinkeby.etherscan.io/address/0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"}
+                        href={"https://create.zora.co/editions/0xC7A03190BdbA0DC9E70814308a665cBcC5e731C7"}
                         >
                         $PRESENT
                         </a>   
                         {" you can update the "}
                         <a 
                         className="text-[#7DE0FF] hover:underline hover:text-[#7DE0FF]"
-                        href="https://rinkeby.etherscan.io/address/0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569"
+                        href="https://etherscan.io/address/0x6422Bf82Ab27F121a043d6DE88b55FA39e2ea292"
                         >
                         storefront
                         </a>                    
@@ -274,8 +273,7 @@ const Curate: NextPage = () => {
                                         {"Current wallet does not own "} 
                                         <a 
                                         className="pl-1 hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
-                                        // href={"https://rinkeby.etherscan.io/address/" + tokeGateAddressCheck}
-                                        href={"https://rinkeby.etherscan.io/address/0x7b9376f6d44b1eb17ffc3e176e0e33b66bab9cfc"}
+                                        href={"https://create.zora.co/editions/0xC7A03190BdbA0DC9E70814308a665cBcC5e731C7"}
                                         >
                                         $PRESENT
                                         </a>   

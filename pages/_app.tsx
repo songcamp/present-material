@@ -21,7 +21,7 @@ import Scrollbars from 'react-custom-scrollbars-2';
 
 
 const { chains, provider } = configureChains(
-  [chain.rinkeby],
+  [chain.mainnet],
   [
     // alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_ALCHMEY_ID  }),
     publicProvider()

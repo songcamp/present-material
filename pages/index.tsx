@@ -11,7 +11,7 @@ const Home: NextPage = () => {
 
   // CuratorContract Read Call --> query array of all active curators
   const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-    addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E", 
+    addressOrName: "0x6422Bf82Ab27F121a043d6DE88b55FA39e2ea292", 
     contractInterface: CurationManager.abi,
     functionName: 'viewAllListings',
     watch: true,
