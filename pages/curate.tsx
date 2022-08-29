@@ -179,7 +179,7 @@ const Curate: NextPage = () => {
                         {"If you own "} 
                         <a 
                         className="hover:underline  text-[#7DE0FF] hover:text-[#7DE0FF]"
-                        href={"https://create.zora.co/editions/0xC7A03190BdbA0DC9E70814308a665cBcC5e731C7"}
+                        href={"https://create.zora.co/editions/0xde3bdb68263a2ce6d98e00450f9a2ea7197cbb99"}
                         >
                         $PRESENT
                         </a>   
@@ -273,7 +273,7 @@ const Curate: NextPage = () => {
                                         {"Current wallet does not own "} 
                                         <a 
                                         className="pl-1 hover:underline text-[#7DE0FF] hover:text-[#7DE0FF]"
-                                        href={"https://create.zora.co/editions/0xC7A03190BdbA0DC9E70814308a665cBcC5e731C7"}
+                                        href={"https://create.zora.co/editions/0xde3bdb68263a2ce6d98e00450f9a2ea7197cbb99"}
                                         >
                                         $PRESENT
                                         </a>   
