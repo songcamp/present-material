@@ -283,7 +283,7 @@ const EditionCard = ({ editionAddress }) => {
                                                 className="ml-3 flex flex-row w-full text-xl "
                                             >
                                                 <a
-                                                    className="hover:underline decoration-1"
+                                                    className="pl-2 hover:underline decoration-1"
                                                     href={"https://create.zora.co/editions/" + editionAddress}
                                                 >
                                                     {editionSalesInfo.name}
