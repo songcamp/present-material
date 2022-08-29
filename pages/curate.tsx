@@ -126,19 +126,19 @@ const Curate: NextPage = () => {
             <Header/>            
             <Head>
                 <title>Present Material</title>
-                <meta name="description" content="Songcamp: Present Material" />
+                <meta name="description" content="A Web3 Record Store" />
                 <link rel="icon" href="/favicon.ico" />
-                <meta name="og:title" content="Present Material" />
+                <meta name="og:title" content="Songcamp: Present Material" />
                 <meta
                 property="og:image"
                 content="https://present-materials.vercel.app/mobile_preview.png"
                 />
                 <meta name="twitter:card" content="summary_large_image"
                 />
-                <meta name="twitter:description" content="created by tranqui.eth"
+                <meta name="twitter:description" content="A Web3 Record Store"
                 />
 
-                <meta name="twitter:title" content="Finders Fee Finder"
+                <meta name="twitter:title" content="Songcamp: Present Material"
                 />
 
                 <meta name="twitter:image" content="https://present-materials.vercel.app/16_9.svg"
