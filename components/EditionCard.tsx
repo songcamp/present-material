@@ -195,7 +195,7 @@ const EditionCard = ({ editionAddress }) => {
     // ENS resolution of artist names    
     const { data: ensData, isError: ensError, isLoading: ensLoading, isSuccess: ensSuccess, isFetching: ensIsFetching, refetch } = useEnsName({
         address: editionSalesInfo.creator,
-        enabled: false,
+        enabled: true,
         suspense: true
     })        
 
@@ -283,7 +283,7 @@ const EditionCard = ({ editionAddress }) => {
                                                 className="ml-3 flex flex-row w-full text-xl "
                                             >
                                                 <a
-                                                    className="pl-2 hover:underline decoration-1"
+                                                    className="hover:underline decoration-1"
                                                     href={"https://create.zora.co/editions/" + editionAddress}
                                                 >
                                                     {editionSalesInfo.name}
