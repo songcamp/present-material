@@ -2,12 +2,10 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import { useAccount, useContractRead, useContractWrite, useWaitForTransaction} from 'wagmi'
+import { useAccount, useContractRead, useContractWrite, useWaitForTransaction, erc721ABI} from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
-import * as presentMaterialsCuratorV3 from "../contractABI/presentMaterialCuratorV3.json"
-import { GetSpecificCurator } from '../components/GetSpecificCurator'
+import * as CurationManager from "../contractABI/CurationManager.json";
 import { BigNumber } from 'ethers'
 
 const allContent = "#00C2FF"
@@ -31,59 +29,41 @@ const Curate: NextPage = () => {
         console.log("currentUseraddress: ", currentUserAddress)
     }
 
-    // Query array of all active curators
-    const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", 
-        contractInterface: presentMaterialsCuratorV3.abi,
-        functionName: 'viewAllCollections',
+    // CuratorContract Read Call --> TokenGateAddress Check
+    const { data: curationPassData, isError: curationPassError, isLoading: tokeGateAddressLoading, isSuccess: tokeGateAddressSuccess, isFetching: tokeGateAddressFetching  } = useContractRead({
+        addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E",
+        contractInterface: CurationManager.abi,
+        functionName: 'curationPass',
         watch: true,
-        onError(error) {
-            console.log("error: ", isError)
+        onError(curationPassError) {
+            console.log("error: ", curationPassError)
         },
-        onSuccess(data) {
-            console.log("Array of current collections --> ", data)
+        onSuccess(curationPassData) {
+            console.log("what is the curationpass ", curationPassData)
         }  
-    })
+    })  
 
-    const collectionData = data ? data : []
+    const tokenGateAddressCheck = curationPassData ? curationPassData.toString() : ""
 
-    // CuratorContract Read Call --> TokenGateBalanceCheck
-    const { data: tokenGateData, isError: tokenGateError, isLoading: tokenGateLoading, isSuccess: tokenGateSuccess, isFetching: tokenGateFetching  } = useContractRead({
-        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", 
-        contractInterface: presentMaterialsCuratorV3.abi,
-        functionName: 'viewUserBalanceOfTokenGate',
+    // curation pass balance check
+    const { data: balanceData, isError: balanceError, isLoading: balanceLoading, isSuccess: balanceSuccess, isFetching: balanceFetching  } = useContractRead({
+        addressOrName: tokenGateAddressCheck,
+        contractInterface: erc721ABI,
+        functionName: 'balanceOf',
         watch: true,
         args: [
             userAddress
         ],
-        onError(tokenGateError) {
-            console.log("error: ", tokenGateError)
+        onError(balanceError) {
+            console.log("what is balance error: ", balanceError)
         },
-        onSuccess(tokenGateData) {
-            // console.log("--> ", tokenGateData)
-        }  
+        onSuccess(balanceData) {
+            console.log("successington : ", balanceData)
+            console.log("is this it", BigNumber.from(balanceData).toString())
+        }
     })  
-
-    const tokenGateCheck = tokenGateData ? BigNumber.from(tokenGateData).toBigInt() : 0
-
-    // CuratorContract Read Call --> TokenGateAddress Check
-    const { data: tokeGateAddressData, isError: tokeGateAddressError, isLoading: tokeGateAddressLoading, isSuccess: tokeGateAddressSuccess, isFetching: tokeGateAddressFetching  } = useContractRead({
-        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV3.abi,
-        functionName: 'viewTokenGateAddress',
-        watch: true,
-        onError(tokeGateAddressError) {
-            console.log("error: ", tokeGateAddressError)
-        },
-        onSuccess(tokeGateAddressData) {
-            // console.log("tokenGateAddressCheck--> ", tokeGateAddressData)
-        }  
-    })  
-
-    // const setAddress = () => {
-    //     const await tokeGateAddressCheck = tokeGateAddressData ? tokeGateAddressData.toString() : "" 
-    //     setTokenGateAddress(tokeGateAddress); 
-    // }
+    
+    const curationPassBalance = balanceData ? Number(BigNumber.from(balanceData).toBigInt()) : 0;  
 
     // add listing call
     const { 
@@ -93,12 +73,11 @@ const Curate: NextPage = () => {
         write: addCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", // PresentMaterialsCurator https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV3.abi,
-        functionName: 'addCollection',
+        addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E",
+        contractInterface: CurationManager.abi,
+        functionName: 'addListing',
         args: [
-            collection.collectionAddress,
-            userAddress,
+            collection.collectionAddress
         ]
     })    
 
@@ -119,12 +98,11 @@ const Curate: NextPage = () => {
         write: removeCollectionWrite 
     } = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", // PresentMaterialsCurator // https://rinkeby.etherscan.io/address/0xe5d36df3087c19f108bba4bb0d79143b8b4725bb#writeContract
-        contractInterface: presentMaterialsCuratorV3.abi,
-        functionName: 'removeCollection',
+        addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E",
+        contractInterface: CurationManager.abi,
+        functionName: 'removeListing',
         args: [
             collection.collectionAddress,
-            userAddress,
         ]
     })        
 
@@ -147,8 +125,8 @@ const Curate: NextPage = () => {
         <div className=' h-screen min-h-screen  bg-[#0E0411]'>
             <Header/>            
             <Head>
-                <title>present materials</title>
-                <meta name="description" content="present materials" />
+                <title>Present Material</title>
+                <meta name="description" content="Present Material" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={`border-t-2 border-solid border-[#00c2ff] mt-[80px] mb-[80px] sm:mb-0 h-full flex flex-row sm:flex-col flex-wrap text-[#00C2FF] text-[16px]`}>
@@ -197,7 +175,7 @@ const Curate: NextPage = () => {
                         storefront
                         </a>                    
                     </div>
-                    { tokenGateCheck > 0 ? (          
+                    { curationPassBalance > 0 ? (          
                     <div className="flex flex-row flex-wrap justify-center">          
                         <div className="mb-5 sm:mb-20 flex flex-row w-full justify-center">
                             <div className=" mb-2 flex items-center  text-[16px]" >

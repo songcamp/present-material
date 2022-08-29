@@ -1,24 +1,19 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useAccount, useContractRead } from 'wagmi'
+import { useContractRead } from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
-import * as presentMaterialsCuratorV3 from "../contractABI/presentMaterialCuratorV3.json"
+import * as CurationManager from "../contractABI/CurationManager.json"
 import EditionCard from '../components/EditionCard';
 import Image from 'next/image'
 
 const Home: NextPage = () => {
 
-  // get account hook
-  const { address, connector, isConnecting, isConnected, status} = useAccount(); 
-  const currentUserAddress = address ? address : ""
-
   // CuratorContract Read Call --> query array of all active curators
   const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
-    addressOrName: "0x0688f06A5DF67b17D06968A7CacA51Ea5cAae569", 
-    contractInterface: presentMaterialsCuratorV3.abi,
-    functionName: 'viewAllCollections',
+    addressOrName: "0x266e365b1DB9Ad2Ed153851Ad2EA890375A8fc3E", 
+    contractInterface: CurationManager.abi,
+    functionName: 'viewAllListings',
     watch: true,
     onError(error) {
         console.log("error: ", isError)

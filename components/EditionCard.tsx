@@ -6,15 +6,14 @@ import { createClient } from "urql"
 import zoraDropsABI from "@zoralabs/nft-drop-contracts/dist/artifacts/ERC721Drop.sol/ERC721Drop.json"
 import { ethers } from 'ethers'
 import MintQuantityV2 from './MintQuantityV2'
-import PostMintDialog from './PostMintDialog'
 import { CustomAudioPlayer } from './CustomAudioPlayer'
-import * as presentMaterialsCuratorV2 from "../contractABI/presentMaterialsCuratorV2.json"
 
 const vibes = "#ffffff"
 
 // API SETUP
 const ZORA_DROPS_MAINNET = "https://api.thegraph.com/subgraphs/name/iainnash/zora-editions-mainnet"
 const ZORA_DROPS_RINKEBY = "https://api.thegraph.com/subgraphs/name/iainnash/erc721droprinkeby"
+const ZORA_DROPS_GOERLI = "https://api.thegraph.com/subgraphs/name/iainnash/erc721drop-goerli"
 
 const client = createClient({
     // url: ZORA_DROPS_MAINNET
@@ -54,7 +53,6 @@ const EditionCard = ({ editionAddress }) => {
     })
 
     const totalSupply = data ? BigNumber.from(data).toString() : []    
-    const tokensRemaining = editionSalesInfo && totalSupply ? Number(editionSalesInfo.maxSupply) -  Number(totalSupply) : "n/a"
 
     const shortenAddress = (address) => {
         const shortenedAddress = address.slice(0, 4) + "..." + address.slice(address.length - 4)
@@ -222,7 +220,7 @@ const EditionCard = ({ editionAddress }) => {
                         loading . . .
                         </div>   
                         ) : (
-                        <div  className="   border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-full text-white flex flex-row flex-wrap justify-center ">
+                        <div  className="   border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-full text-[#00C2FF] flex flex-row flex-wrap justify-center ">
                             <div className=" flex flex-row sm:w-[100%] justify-center border-b-[1px] border-[#00C2FF]">
                                 <Image 
                                     src={editionsImageSRC}
