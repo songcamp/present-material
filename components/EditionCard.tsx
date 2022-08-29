@@ -195,7 +195,7 @@ const EditionCard = ({ editionAddress }) => {
     // ENS resolution of artist names    
     const { data: ensData, isError: ensError, isLoading: ensLoading, isSuccess: ensSuccess, isFetching: ensIsFetching, refetch } = useEnsName({
         address: editionSalesInfo.creator,
-        enabled: true,
+        enabled: false,
         suspense: true
     })        
 
