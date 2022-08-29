@@ -127,11 +127,11 @@ const Curate: NextPage = () => {
             <Head>
             <title>Present Material</title>
             <meta name="description" content="A Web3 Record Store" />
-            <link rel="icon" href="/PM.svg" />
+            <link rel="icon" href="/graphics/PM.svg" />
             <meta name="og:title" content="Songcamp: Present Material" />
             <meta
             property="og:image"
-            content="https://www.presentmaterial.xyz/mobile_preview.png"
+            content="https://www.presentmaterial.xyz/graphics/mobile_preview.png"
             />
             <meta name="twitter:card" content="summary_large_image"
             />
@@ -141,10 +141,10 @@ const Curate: NextPage = () => {
             <meta name="twitter:title" content="Songcamp: Present Material"
             />
 
-            <meta name="twitter:image" content="https://www.presentmaterial.xyz/16_9.svg"
+            <meta name="twitter:image" content="https://www.presentmaterial.xyz/graphics/16_9.svg"
             />           
-            <link rel="icon" href="https://www.presentmaterial.xyz/mobile_preview.png" />
-            <link rel="apple-touch-icon" href="https://www.presentmaterial.xyz/mobile_preview.png" />
+            <link rel="icon" href="https://www.presentmaterial.xyz/graphics/mobile_preview.png" />
+            <link rel="apple-touch-icon" href="https://www.presentmaterial.xyz/graphics/mobile_preview.png" />
             </Head>
             <main className={`border-t-2 border-solid border-[#00c2ff] mt-[80px] mb-[80px] sm:mb-0 h-full flex flex-row sm:flex-col flex-wrap text-[#00C2FF] text-[16px]`}>
                 <div className=" relative z-1 w-[100%] h-[60%] sm:border-r-2 border-solid border-[#00c2ff] sm:h-full  sm:w-[55%] flex flex-row flex-wrap justify-center content-start">                              
