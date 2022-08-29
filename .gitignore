@@ -42,3 +42,6 @@ out/
 !/broadcast
 /broadcast/*
 /broadcast/*/31337/
+
+contracts/bin
+contracts/dist/artifacts
