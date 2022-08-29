@@ -126,8 +126,25 @@ const Curate: NextPage = () => {
             <Header/>            
             <Head>
                 <title>Present Material</title>
-                <meta name="description" content="Present Material" />
+                <meta name="description" content="Songcamp: Present Material" />
                 <link rel="icon" href="/favicon.ico" />
+                <meta name="og:title" content="Present Material" />
+                <meta
+                property="og:image"
+                content="https://present-materials.vercel.app/mobile_preview.png"
+                />
+                <meta name="twitter:card" content="summary_large_image"
+                />
+                <meta name="twitter:description" content="created by tranqui.eth"
+                />
+
+                <meta name="twitter:title" content="Finders Fee Finder"
+                />
+
+                <meta name="twitter:image" content="https://present-materials.vercel.app/16_9.svg"
+                />           
+                <link rel="icon" href="https://present-materials.vercel.app/mobile_preview.png" />
+                <link rel="apple-touch-icon" href="https://present-materials.vercel.app/mobile_preview.png" />
             </Head>
             <main className={`border-t-2 border-solid border-[#00c2ff] mt-[80px] mb-[80px] sm:mb-0 h-full flex flex-row sm:flex-col flex-wrap text-[#00C2FF] text-[16px]`}>
                 <div className=" relative z-1 w-[100%] h-[60%] sm:border-r-2 border-solid border-[#00c2ff] sm:h-full  sm:w-[55%] flex flex-row flex-wrap justify-center content-start">                              
