@@ -61,17 +61,11 @@ const Home: NextPage = () => {
         />
       </div>
       <main className={` pb-8 sm:pb-[70px] text-white grid grid-rows-[${rowAndColumnCount}]  flex justify-center lg:grid-cols-3 sm:grid-cols-2  w-[90%] sm:w-[80%]  gap-y-8 sm:gap-y-[70px]  gap-x-0 sm:gap-x-[70px]`}> 
-
       {
-        collectionData.map((collection, index) => {
-          while (index < collectionData.length) {
-            return (
-              <EditionCard editionAddress={collectionData[index]} />
-            )
-          }
-        })
+        collectionData.map((collection, index) =>
+          <EditionCard editionAddress={collectionData[index]} key={collection} />
+        )
       }
-
       </main>
       <Footer />
     </div>
