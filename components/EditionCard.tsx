@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import { useContractWrite, useContractRead, useWaitForTransaction, useEnsName } from "wagmi"
+import { useContractWrite, useContractRead, useWaitForTransaction } from "wagmi"
 import { BigNumber } from "ethers"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createClient } from "urql"
 import zoraDropsABI from "@zoralabs/nft-drop-contracts/dist/artifacts/ERC721Drop.sol/ERC721Drop.json"
 import { ethers } from 'ethers'
@@ -185,24 +185,13 @@ const EditionCard = ({ editionAddress }) => {
     }    
 
     // Wait for data from mint call
-    const { data: mintWaitData, isError: mintWaitError, isLoading: mintWaitLoading } = useWaitForTransaction({
+    const { data: mintWaitData, isLoading: mintWaitLoading } = useWaitForTransaction({
         hash:  mintData?.hash,
         onSuccess(mintWaitData) {
             console.log("txn complete: ", mintWaitData)
             console.log("txn hash: ", mintWaitData.transactionHash)
         }
     })           
-
-    // ENS resolution of artist names    
-    const { data: ensData, isError: ensError, isLoading: ensLoading, isSuccess: ensSuccess, isFetching: ensIsFetching, refetch } = useEnsName({
-        address: editionSalesInfo.creator,
-        enabled: false,
-        suspense: true
-    })        
-
-    const ensToRender = ensData && ensData != undefined 
-        ? ensData 
-        : shortenAddress(editionSalesInfo.creator)    
 
     // max supply check
     const maxSupplyCheck = (supply) => {
