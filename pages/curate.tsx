@@ -127,7 +127,7 @@ const Curate: NextPage = () => {
             <Head>
             <title>Present Material</title>
             <meta name="description" content="A Web3 Record Store" />
-            <link rel="icon" href="/graphics/PM.svg" />
+            <link rel="icon" href="/graphics/1_1.png" />
             <meta name="og:title" content="Songcamp: Present Material" />
             <meta
             property="og:image"
@@ -141,7 +141,7 @@ const Curate: NextPage = () => {
             <meta name="twitter:title" content="Songcamp: Present Material"
             />
 
-            <meta name="twitter:image" content="https://www.presentmaterial.xyz/graphics/16_9.svg"
+            <meta name="twitter:image" content="https://www.presentmaterial.xyz/graphics/16_9.png"
             />           
             <link rel="icon" href="https://www.presentmaterial.xyz/graphics/mobile_preview.png" />
             <link rel="apple-touch-icon" href="https://www.presentmaterial.xyz/graphics/mobile_preview.png" />
