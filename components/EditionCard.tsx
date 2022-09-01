@@ -1,12 +1,13 @@
 import Image from 'next/image'
-import { useContractWrite, useContractRead, useWaitForTransaction, useEnsName } from "wagmi"
+import { useContractWrite, useContractRead, useWaitForTransaction } from "wagmi"
 import { BigNumber } from "ethers"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createClient } from "urql"
 import zoraDropsABI from "@zoralabs/nft-drop-contracts/dist/artifacts/ERC721Drop.sol/ERC721Drop.json"
 import { ethers } from 'ethers'
 import MintQuantityV2 from './MintQuantityV2'
 import { CustomAudioPlayer } from './CustomAudioPlayer'
+import { EditionArtist } from './EditionArtist'
 
 const vibes = "#ffffff"
 
@@ -184,24 +185,13 @@ const EditionCard = ({ editionAddress }) => {
     }    
 
     // Wait for data from mint call
-    const { data: mintWaitData, isError: mintWaitError, isLoading: mintWaitLoading } = useWaitForTransaction({
+    const { data: mintWaitData, isLoading: mintWaitLoading } = useWaitForTransaction({
         hash:  mintData?.hash,
         onSuccess(mintWaitData) {
             console.log("txn complete: ", mintWaitData)
             console.log("txn hash: ", mintWaitData.transactionHash)
         }
     })           
-
-    // ENS resolution of artist names    
-    const { data: ensData, isError: ensError, isLoading: ensLoading, isSuccess: ensSuccess, isFetching: ensIsFetching, refetch } = useEnsName({
-        address: editionSalesInfo.creator,
-        enabled: false,
-        suspense: true
-    })        
-
-    const ensToRender = ensData && ensData != undefined 
-        ? ensData 
-        : shortenAddress(editionSalesInfo.creator)    
 
     // max supply check
     const maxSupplyCheck = (supply) => {
@@ -275,13 +265,9 @@ const EditionCard = ({ editionAddress }) => {
                                     </div>                                                          
                                     ) : (
                                     <div className="w-full ">
-                                        <CustomAudioPlayer
-                                            musicSRC={editionsAnimationSRC}
-                                        />
+                                        <CustomAudioPlayer  musicSRC={editionsAnimationSRC} />
                                         <div className=" flex flex-row flex-wrap w-full pb-4 space-y-2 ">
-                                            <div
-                                                className="ml-3 flex flex-row w-full text-xl "
-                                            >
+                                            <div className="ml-3 flex flex-row w-full text-xl">
                                                 <a
                                                     className="hover:underline decoration-1"
                                                     href={"https://create.zora.co/editions/" + editionAddress}
@@ -289,17 +275,7 @@ const EditionCard = ({ editionAddress }) => {
                                                     {editionSalesInfo.name}
                                                 </a>
                                             </div>
-                                            <div
-                                                className="ml-3 flex flex-row w-full font-bold text-xl "                                
-                                            >
-                                                {"ARTIST - "}
-                                                <a
-                                                    className="pl-2 hover:underline decoration-1"
-                                                    href={"https://etherscan.io/address/" + editionSalesInfo.creator}                                        
-                                                >
-                                                    {ensToRender}
-                                                </a> 
-                                            </div>
+                                            {editionSalesInfo?.creator && <EditionArtist creatorAddress={editionSalesInfo?.creator} />}                  
                                         </div>
                                         <div className=" justify-evenly flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
                                             <div
