@@ -219,13 +219,14 @@ const EditionCard = ({ editionAddress }) => {
                         </div>   
                         ) : (
                         <div  className="   border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-full text-[#00C2FF] flex flex-row flex-wrap justify-center ">
-                            <div className=" flex flex-row sm:w-[100%] justify-center border-b-[1px] border-[#00C2FF]">
-                                <Image 
-                                    src={editionsImageSRC}
-                                    // layout={"fill"
-                                    width={354}
-                                    height={354}                                                        
-                                />                            
+                            <div className=" flex flex-row sm:w-[100%] justify-center border-b-[1px] border-[#00C2FF] relative" style={{width: 354, height: 354 }}>
+                                <div className="">
+                                    <Image 
+                                        src={editionsImageSRC}
+                                        layout="fill"
+                                        objectFit='cover'        
+                                    />
+                                </div>        
                             </div>
                             { mintWaitLoading == false && mintOverlayState == true && mintStatus == "success" ? (
                             <div className=" h-[268px] bg-[#00C2FF] flex flex-row sm:w-[100%] justify-center items-center  ">
