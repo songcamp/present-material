@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer'
 import * as CurationManager from "../contractABI/CurationManager.json"
 import EditionCard from '../components/EditionCard';
 import Image from 'next/image'
+import shuffle from 'lodash/shuffle'
 
 const Home: NextPage = () => {
 
@@ -24,8 +25,8 @@ const Home: NextPage = () => {
   })
   
   const collectionData = data ? data : []
-  const collectionDataReverseOrder = [...collectionData].reverse();
-  
+  const shuffledCollectionData = shuffle(collectionData)
+
   const rowAndColumnCount = collectionData.length
 
   return (
@@ -64,8 +65,8 @@ const Home: NextPage = () => {
       </div>
       <main className={` pb-8 sm:pb-[70px] text-white grid grid-rows-[${rowAndColumnCount}]  flex justify-center lg:grid-cols-3 sm:grid-cols-2  w-[90%] sm:w-[80%]  gap-y-8 sm:gap-y-[70px]  gap-x-0 sm:gap-x-[70px]`}> 
       {
-        collectionDataReverseOrder.map((collection, index) =>
-          <EditionCard editionAddress={collectionDataReverseOrder[index]} key={collection} />
+        shuffledCollectionData.map((collection, index) =>
+          <EditionCard editionAddress={shuffledCollectionData[index]} key={collection} />
         )
       }
       </main>
