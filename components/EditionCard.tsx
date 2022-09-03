@@ -219,8 +219,8 @@ const EditionCard = ({ editionAddress }) => {
                         </div>   
                         ) : (
                         <div  className="   border-[1px] border-[#00C2FF] text-[#00C2FF] h-[100%] w-full text-[#00C2FF] flex flex-row flex-wrap justify-center ">
-                            <div className=" flex flex-row sm:w-[100%] justify-center border-b-[1px] border-[#00C2FF] relative" style={{width: 354, height: 354 }}>
-                                <div className="">
+                            <div className=" flex flex-row sm:w-[100%] justify-center border-b-[1px] border-[#00C2FF]">
+                                <div className="relative" style={{width: 354, height: 354 }}>
                                     <Image 
                                         src={editionsImageSRC}
                                         layout="fill"
