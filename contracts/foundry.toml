@@ -1,6 +1,9 @@
 [profile.default]
+auto_detect_solc = true
+optimizer = true
+optimizer_runs = 5000
 src = 'src'
-out = 'out'
+out = 'dist/artifacts'
 libs = ['lib']
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
