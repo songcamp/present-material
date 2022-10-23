@@ -12,7 +12,9 @@ import {
   createClient,
   WagmiConfig,
 } from 'wagmi';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 
 // not in use
@@ -23,8 +25,16 @@ import Scrollbars from 'react-custom-scrollbars-2';
 const { chains, provider } = configureChains(
   [chain.mainnet],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY }),
-    publicProvider()
+    jsonRpcProvider({
+      priority: 0,
+      rpc: (chain) => (chain.id === 1 ? { http: `https://rpc.ankr.com/eth` } : null)
+    }),
+    alchemyProvider({ 
+      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY,
+      priority: 1
+    }),
+    infuraProvider({ priority: 2 }),
+    publicProvider({ priority: 3 })
   ]
 );
 
