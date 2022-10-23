@@ -28,8 +28,12 @@ const { chains, provider } = configureChains(
       priority: 0,
       rpc: (chain) => (chain.id === 1 ? { http: `https://rpc.ankr.com/eth` } : null)
     }),
-    infuraProvider({ priority: 0 }),
-    publicProvider({ priority: 1 })
+    alchemyProvider({ 
+      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY,
+      priority: 1
+    }),
+    infuraProvider({ priority: 2 }),
+    publicProvider({ priority: 3 })
   ]
 );
 

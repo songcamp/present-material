@@ -6,11 +6,12 @@ import { Footer } from '../components/Footer'
 import * as CurationManager from "../contractABI/CurationManager.json"
 import EditionCard from '../components/EditionCard';
 import Image from 'next/image'
+import { useMemo } from 'react'
 
 const Home: NextPage = () => {
 
   // CuratorContract Read Call --> query array of all active curators
-  const { data, isError, isLoading, isSuccess, isFetching  } = useContractRead({
+  const { data, isError  } = useContractRead({
     addressOrName: "0x6422Bf82Ab27F121a043d6DE88b55FA39e2ea292", 
     contractInterface: CurationManager.abi,
     functionName: 'viewAllListings',
@@ -23,7 +24,11 @@ const Home: NextPage = () => {
     }  
   })
   
-  const collectionData = data ? data : []
+  const collectionData = useMemo(
+    () => (data ? data : []),
+    [data],
+  )
+
   const collectionDataReverseOrder = [...collectionData].reverse();
   
   const rowAndColumnCount = collectionData.length
