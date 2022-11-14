@@ -54,7 +54,11 @@ const Home: NextPage = () => {
           <Image src={'/collection_page_graphic_v2.png'} height={227} width={315} />
         </div>
         <div className='p-4 text-xl font-semibold'>
-          <FutureTapeButton href='present+material' color='#00c2ff' text='Future&nbsp;Tape&nbsp;↗︎' />
+          <FutureTapeButton
+            href='present+material'
+            color='#00c2ff'
+            text='Listen&nbsp;on&nbsp;Future&nbsp;Tape&nbsp;↗︎'
+          />
         </div>
       </div>
       <main
