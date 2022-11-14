@@ -58,6 +58,7 @@ const Home: NextPage = () => {
             href='present+material'
             color='#00c2ff'
             text='Listen&nbsp;on&nbsp;Future&nbsp;Tape&nbsp;↗︎'
+            className='relative inline-block max-w-fit text-[color:var(--future-tape-color)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-[color:var(--future-tape-color)] after:transition-transform after:duration-[0.4s] after:ease-[cubic-bezier(0.86,0,0.07,1)] hover:after:origin-bottom-left hover:after:scale-x-100'
           />
         </div>
       </div>
