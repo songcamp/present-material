@@ -49,15 +49,12 @@ const Home: NextPage = () => {
         <link rel='apple-touch-icon' href='https://www.presentmaterial.xyz/graphics/mobile_preview.png' />
       </Head>
 
-      <div className='relative py-10 border-t-[1px] border-solid border-[#00c2ff] mt-[80px] w-full flex flex-row justify-center '>
-        <Image src={'/collection_page_graphic_v2.png'} height={227} width={315} />
-        <div className='absolute bottom-4 '>
-          <FutureTapeButton
-            href='present+material'
-            color='#00c2ff'
-            text='Listen&nbsp;on&nbsp;FutureTape&nbsp;↗︎'
-            className='relative inline-block max-w-fit text-[color:var(--future-tape-color)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-[color:var(--future-tape-color)] after:transition-transform after:duration-[0.4s] after:ease-[cubic-bezier(0.86,0,0.07,1)] hover:after:origin-bottom-left hover:after:scale-x-100'
-          />
+      <div className='relative py-10 border-t-[1px] border-solid border-[#00c2ff] mt-[80px] w-full flex flex-col justify-center items-center'>
+        <div>
+          <Image src={'/collection_page_graphic_v2.png'} height={227} width={315} />
+        </div>
+        <div className='p-4 text-xl font-semibold'>
+          <FutureTapeButton href='present+material' color='#00c2ff' text='Future&nbsp;Tape&nbsp;↗︎' />
         </div>
       </div>
       <main

@@ -119,7 +119,7 @@ export const Header = () => {
             <FutureTapeButton
               href='present+material'
               color='#00c2ff'
-              text='FutureTape&nbsp;↗︎'
+              text='Future&nbsp;Tape&nbsp;↗︎'
               className='hover:text-[#7DE0FF] inline-block'
             />
             <div className='flex flex-row items-center space-x-3 sm:space-x-5 '>
