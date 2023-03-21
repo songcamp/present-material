@@ -287,11 +287,6 @@ const EditionCard = ({ editionAddress, totalCurated, index }) => {
                                             {editionSalesInfo?.creator && <EditionArtist creatorAddress={editionSalesInfo?.creator} />}                  
                                         </div>
                                         <div className=" justify-evenly flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
-                                        <div
-                                                className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
-                                            >
-                                                {"index: " + index}
-                                            </div>
                                             <div
                                                 className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
                                             >
