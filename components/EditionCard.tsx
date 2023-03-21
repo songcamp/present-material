@@ -20,7 +20,7 @@ const client = createClient({
     url: ZORA_DROPS_MAINNET
 })
 
-const EditionCard = ({ editionAddress }) => {
+const EditionCard = ({ editionAddress, totalCurated, index }) => {
 
     const [mintQuantity, setMintQuantity] = useState({ name: '1', queryValue: 1 })
     const [loading, setLoading] = useState(false)
@@ -143,9 +143,15 @@ const EditionCard = ({ editionAddress }) => {
 
     // ZORA NFT DROPS Mint Call
 
+    // edited March 20 2023
+    const zoraMintFee = 777000000000000    
+    const tracksCuratedBeforeFee = 31
+
     const editionSalePriceConverted = Number(editionSalesInfo.publicSalePrice)
     const editionTotalMintPrice = String(mintQuantity.queryValue * editionSalePriceConverted)
     const totalMintValueEth = ethers.utils.formatUnits(editionTotalMintPrice)
+
+    const editionTotalMintPriceWithZoraFee = String(mintQuantity.queryValue * (editionSalePriceConverted + zoraMintFee))
 
     const { 
         data: mintData, 
@@ -164,7 +170,9 @@ const EditionCard = ({ editionAddress }) => {
             mintQuantity.queryValue
         ],
         overrides: {
-            value: editionTotalMintPrice
+            // 30 is the hardcoded index of where the last zora contract pre contract
+            // fee updated is stored (with 0 being the first song ever curated)
+            value: index < totalCurated - tracksCuratedBeforeFee ? editionTotalMintPriceWithZoraFee : editionTotalMintPrice
         },
         onError(error, variables, context) {
             console.log("error", JSON.stringify(error.message))
@@ -279,6 +287,11 @@ const EditionCard = ({ editionAddress }) => {
                                             {editionSalesInfo?.creator && <EditionArtist creatorAddress={editionSalesInfo?.creator} />}                  
                                         </div>
                                         <div className=" justify-evenly flex flex-row flex-wrap w-full py-3 border-[1px] border-[#00C2FF]">
+                                        <div
+                                                className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
+                                            >
+                                                {"index: " + index}
+                                            </div>
                                             <div
                                                 className="flex flex-row  text-xl border-[#00C2FF] border-2 w-[25%] rounded  bg-[#00C2FF] justify-center text-center  text-black"
                                             >
