@@ -66,7 +66,7 @@ const Home: NextPage = () => {
         className={` pb-8 sm:pb-[70px] text-white grid grid-rows-[${rowAndColumnCount}]  flex justify-center lg:grid-cols-3 sm:grid-cols-2  w-[90%] sm:w-[80%]  gap-y-8 sm:gap-y-[70px]  gap-x-0 sm:gap-x-[70px]`}
       >
         {collectionDataReverseOrder.map((collection, index) => (
-          <EditionCard editionAddress={collectionDataReverseOrder[index]} key={collection} />
+          <EditionCard editionAddress={collectionDataReverseOrder[index]} totalCurated={rowAndColumnCount} index={index} key={collection} />
         ))}
       </main>
       <Footer />
